@@ -14,7 +14,7 @@ const Header = () => {
           <div className="flex items-center space-x-2">
             <Shield className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-              Buy A Warranty
+              CoverMe Warranty
             </span>
           </div>
 

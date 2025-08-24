@@ -38,8 +38,8 @@ const HeroSection = () => {
             </div>
             
             <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-              Protect Your Car with
-              <span className="block text-primary-glow">Comprehensive Warranty</span>
+              Vehicle Warranty
+              <span className="block text-primary-glow">Made Simple</span>
             </h1>
             
             <p className="text-xl text-white/90 max-w-lg">
