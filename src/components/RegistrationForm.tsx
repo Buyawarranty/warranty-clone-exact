@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import VehicleDetailsStep from './VehicleDetailsStep';
 
@@ -42,6 +41,8 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   currentStep,
   onStepChange
 }) => {
+  console.log('RegistrationForm rendering...');
+  
   const handleVehicleNext = (data: VehicleData) => {
     onFormDataUpdate?.(data);
     // Pass empty contact details since we'll collect them in step 2

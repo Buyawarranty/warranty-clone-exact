@@ -1,9 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { Check, Search, Zap, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-
 
 interface VehicleDetailsStepProps {
   onNext: (data: { regNumber: string; mileage: string; make?: string; model?: string; fuelType?: string; transmission?: string; year?: string; vehicleType?: string; isManualEntry?: boolean }) => void;
@@ -36,6 +34,7 @@ interface DVLAVehicleData {
 }
 
 const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initialData }) => {
+  console.log('VehicleDetailsStep rendering...');
   const { toast } = useToast();
   const [regNumber, setRegNumber] = useState(''); // Always start empty for new warranties
   const [mileage, setMileage] = useState(initialData?.mileage || '');
@@ -411,6 +410,7 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
             <div className="mb-4 p-3 sm:p-4 border-2 border-gray-200 rounded-[6px]">
               <h3 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Enter your vehicle details manually</h3>
               
+              {/* Manual entry form fields... */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center gap-2 mb-2">
@@ -448,7 +448,7 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
                       type="text"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
-                      placeholder="e.g. A3"
+                      placeholder="e.g. A4"
                       className="w-full border-2 border-gray-300 rounded-[6px] px-[16px] py-[12px] pr-[40px] focus:outline-none"
                       onFocus={(e) => e.target.style.borderColor = '#224380'}
                       onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
@@ -459,11 +459,11 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
                     )}
                   </div>
                 </div>
-                
+
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <label className="block font-semibold text-gray-700">Year</label>
-                    {year && !yearError && (
+                    {year.trim() && !yearError && (
                       <Check className="w-4 h-4 text-green-500" />
                     )}
                   </div>
@@ -473,46 +473,28 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
                       value={year}
                       onChange={handleYearChange}
                       placeholder="e.g. 2020"
-                      min="1990"
-                      max={new Date().getFullYear()}
+                      min="2000"
+                      max="2024"
                       className={`w-full border-2 rounded-[6px] px-[16px] py-[12px] pr-[40px] focus:outline-none ${
-                        yearError ? 'border-red-500' : 'border-gray-300'
+                        yearError ? 'border-red-300' : 'border-gray-300'
                       }`}
-                      onFocus={(e) => {
-                        if (!yearError) {
-                          e.target.style.borderColor = '#224380';
-                        }
-                      }}
-                      onBlur={(e) => {
-                        if (!yearError) {
-                          e.target.style.borderColor = '#d1d5db';
-                        }
-                      }}
+                      onFocus={(e) => e.target.style.borderColor = yearError ? '#fca5a5' : '#224380'}
+                      onBlur={(e) => e.target.style.borderColor = yearError ? '#fca5a5' : '#d1d5db'}
                       required
                     />
-                    {year && !yearError && (
+                    {year.trim() && !yearError && (
                       <Check className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
                     )}
                   </div>
                   {yearError && (
-                    <div className="bg-orange-50 border border-orange-200 rounded-[4px] p-3 mt-2">
-                      <h3 className="text-lg font-bold text-orange-800 mb-2">
-                        Sorry, We Can't Cover This Vehicle
-                      </h3>
-                      <p className="text-sm text-orange-700 mb-2">
-                        We can't provide a warranty for vehicles that are more than 15 years old.
-                      </p>
-                      <p className="text-sm text-orange-700">
-                        If your car is newer than that, feel free to try again. We may just need to run a couple of extra checks 🔍 before we can confirm your cover.
-                      </p>
-                    </div>
+                    <p className="text-sm text-red-600 mt-1">{yearError}</p>
                   )}
                 </div>
-                
+
                 <div>
                   <div className="flex items-center gap-2 mb-2">
                     <label className="block font-semibold text-gray-700">Vehicle Type</label>
-                    {vehicleType && (
+                    {vehicleType.trim() && (
                       <Check className="w-4 h-4 text-green-500" />
                     )}
                   </div>
@@ -520,19 +502,19 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
                     <select
                       value={vehicleType}
                       onChange={(e) => setVehicleType(e.target.value)}
-                      className="w-full border-2 border-gray-300 rounded-[6px] px-[16px] py-[12px] pr-[40px] focus:outline-none"
+                      className="w-full border-2 border-gray-300 rounded-[6px] px-[16px] py-[12px] pr-[40px] focus:outline-none appearance-none"
                       onFocus={(e) => e.target.style.borderColor = '#224380'}
                       onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
                       required
                     >
-                      <option value="">Select vehicle type</option>
+                      <option value="">Select type</option>
                       <option value="Car or Van">Car or Van</option>
-                      <option value="Electric Vehicle EV Extended Warranty">Electric Vehicle EV Extended Warranty</option>
-                      <option value="Motorbike Extended Warranty">Motorbike Extended Warranty</option>
-                      <option value="PHEV Hybrid Extended Warranty">PHEV Hybrid Extended Warranty</option>
+                      <option value="EV">Electric Vehicle</option>
+                      <option value="PHEV">Plug-in Hybrid</option>
+                      <option value="MOTORBIKE">Motorbike</option>
                     </select>
-                    {vehicleType && (
-                      <Check className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
+                    {vehicleType.trim() && (
+                      <Check className="absolute right-8 top-1/2 transform -translate-y-1/2 w-4 h-4 text-green-500" />
                     )}
                   </div>
                 </div>
@@ -540,85 +522,55 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
             </div>
           )}
 
-          {(vehicleFound || showManualEntry) && (
-            <>
-              <div className="flex items-center gap-2 mb-2">
-                <label htmlFor="mileage" className="block font-semibold text-gray-700 text-lg sm:text-xl">
-                  What's your approximate mileage?
-                </label>
-                {mileage.trim() && !mileageError && (
-                  <Check className="w-5 h-5 text-green-500" />
-                )}
-              </div>
-              <div className="relative">
-                <input
-                  type="text"
-                  id="mileage"
-                  value={mileage}
-                  onChange={handleMileageChange}
-                  placeholder="e.g. 32,000"
-                  className={`w-full border-2 rounded-[6px] px-[16px] py-[12px] pr-[50px] mb-2 focus:outline-none ${
-                    mileageError ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  onFocus={(e) => {
-                    if (!mileageError) {
-                      e.target.style.borderColor = '#224380';
-                    }
-                  }}
-                  onBlur={(e) => {
-                    if (!mileageError) {
-                      e.target.style.borderColor = '#d1d5db';
-                    }
-                  }}
-                />
-                {mileage.trim() && !mileageError && (
-                  <Check className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-green-500" />
-                )}
-              </div>
-              {mileageError && (
-                <div className="bg-red-50 border border-red-200 rounded-[4px] p-3 mb-2">
-                  <p className="text-sm text-red-800 font-semibold">{mileageError}</p>
-                </div>
+          {/* Mileage Input */}
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-2">
+              <label className="block font-semibold text-gray-700 text-lg">
+                Vehicle mileage
+              </label>
+              {mileage && !mileageError && (
+                <Check className="w-5 h-5 text-green-500" />
               )}
-              {!mileageError && (
-                <p className="text-sm text-black mb-4">We can only provide warranty for vehicles with a maximum mileage of 150,000</p>
+            </div>
+            <div className="relative">
+              <input
+                type="text"
+                value={mileage}
+                onChange={handleMileageChange}
+                placeholder="Enter mileage (e.g. 50,000)"
+                className={`w-full max-w-[520px] border-2 rounded-[6px] px-[16px] py-[12px] pr-[40px] text-lg focus:outline-none ${
+                  mileageError ? 'border-red-300' : 'border-gray-300'
+                }`}
+                onFocus={(e) => e.target.style.borderColor = mileageError ? '#fca5a5' : '#224380'}
+                onBlur={(e) => e.target.style.borderColor = mileageError ? '#fca5a5' : '#d1d5db'}
+              />
+              {mileage && !mileageError && (
+                <Check className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-green-500" />
               )}
+            </div>
+            {mileageError && (
+              <p className="text-sm text-red-600 mt-1">{mileageError}</p>
+            )}
+          </div>
 
-
-              <div className="relative">
-                <button 
-                  type="submit"
-                  disabled={showManualEntry ? !isManualFormValid : !isAutoFormValid}
-                  className="w-full text-white text-[15px] font-bold px-[20px] py-[12px] sm:py-[18px] rounded-[6px] border-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                  style={{
-                    backgroundColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
-                    borderColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
-                    opacity: (showManualEntry ? isManualFormValid : isAutoFormValid) ? 1 : 0.5,
-                    animation: (showManualEntry ? isManualFormValid : isAutoFormValid) ? 'breathe 5s ease-in-out infinite' : 'none'
-                  }}
-                >
-                  Get my quote →
-                </button>
-              </div>
-            </>
-          )}
-          </form>
-        </div>
+          {/* Submit Button */}
+          <button 
+            type="submit"
+            disabled={showManualEntry ? !isManualFormValid : !isAutoFormValid}
+            className="w-full max-w-[520px] block text-white text-[21px] font-bold py-[20px] sm:py-[24px] px-[20px] rounded-[6px] mb-4 border-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            style={{
+              backgroundColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
+              borderColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
+              color: 'white',
+              opacity: (showManualEntry ? isManualFormValid : isAutoFormValid) ? 1 : 0.5
+            }}
+          >
+            Get My Quote
+          </button>
+        </form>
       </div>
-      
-      {/* Back button to buyawarranty.co.uk */}
-      <div className="max-w-3xl mx-auto mt-4">
-        <a 
-          href="https://buyawarranty.co.uk/" 
-          className="inline-flex items-center gap-2 text-base font-medium py-3 px-6 rounded-lg border transition-all duration-200 bg-white hover:bg-gray-50 border-gray-200 text-gray-700"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Back
-        </a>
-      </div>
-    </section>
+    </div>
+  </section>
   );
 };
 
