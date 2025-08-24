@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -29,6 +28,7 @@ interface VehicleData {
 }
 
 const Index = () => {
+  console.log('Index component rendering...');
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   
@@ -295,6 +295,8 @@ const Index = () => {
   // Check if vehicle is a special type
   const isSpecialVehicle = vehicleData?.vehicleType && ['EV', 'PHEV', 'MOTORBIKE'].includes(vehicleData.vehicleType);
 
+  console.log('Rendering Index with currentStep:', currentStep);
+  
   return (
     <div className="bg-[#e8f4fb] min-h-screen overflow-x-hidden">
       <CarJourneyProgress currentStep={currentStep} onStepChange={handleStepChange} />
