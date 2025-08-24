@@ -260,55 +260,33 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
   const isAutoFormValid = regNumber && mileage && numericMileage <= 150000 && mileageError === '' && regError === '';
 
   return (
-    <section className="bg-[#e8f4fb] py-2 px-3 sm:px-0">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-4 sm:p-6">
-         <div className="mb-4">
-           <div className="relative">
-             <div className="absolute top-0 right-0 hidden sm:block">
-               <img 
-                 src="/lovable-uploads/bed8e125-f5d3-4bf5-a0f8-df4df5ff8693.png" 
-                 alt="Trustpilot" 
-                 className="h-8 sm:h-10 w-auto opacity-90"
-               />
-             </div>
-           </div>
-         </div>
-
-         <div className="flex flex-col items-center">
-           <form onSubmit={handleSubmit} className="w-full max-w-[520px]">
-            <div className="flex items-center gap-2 mb-4">
-               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 flex items-center gap-2">
-                 Your quote in 30 seconds
-                 <Zap size={28} className="text-orange-500" />
-               </h1>
+    <div className="w-full">
+      <div className="space-y-6">
+        <form onSubmit={handleSubmit} className="w-full space-y-6">
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+              <Search size={20} className="text-[#ea580c]" />
+              Find your vehicle
+            </h2>
+            <div 
+              className="w-full flex items-center bg-white text-gray-900 font-bold text-lg px-4 py-4 rounded-lg border-2 border-gray-300 focus-within:border-[#1e40af] transition-colors cursor-pointer hover:border-[#1e40af]"
+              onClick={() => document.getElementById('regInput')?.focus()}
+            >
+              <img 
+                src="/lovable-uploads/5fdb1e2d-a10b-4cce-b083-307d56060fc8.png" 
+                alt="GB Flag" 
+                className="w-8 h-6 mr-3 object-cover rounded-sm"
+              />
+              <input
+                id="regInput"
+                type="text"
+                value={regNumber}
+                onChange={handleRegChange}
+                placeholder="Enter your reg plate"
+                className="bg-transparent border-none outline-none text-lg text-gray-900 flex-1 font-medium placeholder:text-gray-500"
+                maxLength={8}
+              />
             </div>
-            <div className="flex items-center gap-2 mb-2">
-              <h2 className="flex items-center justify-between font-medium text-gray-600 text-lg sm:text-xl">
-                <div className="flex items-center gap-1">
-                  Let's find your vehicle  
-                </div>
-                <Search size={20} className="text-orange-500" />
-              </h2>
-           </div>
-          <div 
-            className="w-full max-w-[520px] flex items-center bg-[#ffdb00] text-gray-900 font-bold text-xl sm:text-[28px] px-[15px] sm:px-[25px] py-[12px] sm:py-[18px] rounded-[6px] mb-3 shadow-sm leading-tight cursor-pointer border-2 border-black relative"
-            onClick={() => document.getElementById('regInput')?.focus()}
-          >
-            <img 
-              src="/lovable-uploads/5fdb1e2d-a10b-4cce-b083-307d56060fc8.png" 
-              alt="GB Flag" 
-              className="w-[25px] sm:w-[35px] h-[18px] sm:h-[25px] mr-[10px] sm:mr-[15px] object-cover rounded-[2px]"
-            />
-             <input
-               id="regInput"
-               type="text"
-               value={regNumber}
-               onChange={handleRegChange}
-               placeholder="Enter your reg"
-               className="bg-transparent border-none outline-none text-xl sm:text-[28px] text-gray-900 flex-1 font-bold font-sans placeholder:tracking-normal tracking-normal pr-[40px]"
-               maxLength={8}
-             />
-           </div>
            
            {regError && (
              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start gap-2">
@@ -317,21 +295,17 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
              </div>
            )}
           
+          </div>
+
           {!showManualEntry && !vehicleFound && (
-             <button 
-               type="button"
-               onClick={handleFindCar}
-               disabled={!regNumber || isLookingUp || regError !== ''}
-               className="w-full max-w-[520px] block text-white text-[21px] font-bold py-[20px] sm:py-[24px] px-[20px] rounded-[6px] mb-4 border-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-               style={{
-                 backgroundColor: regNumber && !isLookingUp && !regError ? '#eb4b00' : '#eb4b00',
-                 borderColor: regNumber && !isLookingUp && !regError ? '#eb4b00' : '#eb4b00',
-                 color: 'white',
-                 opacity: regNumber && !isLookingUp && !regError ? 1 : 0.5
-               }}
-             >
-               {isLookingUp ? 'Looking up...' : 'Find my vehicle'}
-             </button>
+            <button 
+              type="button"
+              onClick={handleFindCar}
+              disabled={!regNumber || isLookingUp || regError !== ''}
+              className="w-full bg-[#1e40af] hover:bg-[#1d4ed8] text-white text-lg font-semibold py-4 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover-scale"
+            >
+              {isLookingUp ? 'Looking up...' : 'Find my vehicle'}
+            </button>
           )}
 
           {vehicleFound && vehicleData?.found && !showManualEntry && (
@@ -523,8 +497,8 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
           )}
 
           {/* Mileage Input */}
-          <div className="mb-4">
-            <div className="flex items-center gap-2 mb-2">
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
               <label className="block font-semibold text-gray-700 text-lg">
                 Vehicle mileage
               </label>
@@ -538,18 +512,16 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
                 value={mileage}
                 onChange={handleMileageChange}
                 placeholder="Enter mileage (e.g. 50,000)"
-                className={`w-full max-w-[520px] border-2 rounded-[6px] px-[16px] py-[12px] pr-[40px] text-lg focus:outline-none ${
-                  mileageError ? 'border-red-300' : 'border-gray-300'
+                className={`w-full border-2 rounded-lg px-4 py-4 text-lg focus:outline-none transition-colors ${
+                  mileageError ? 'border-red-300 focus:border-red-400' : 'border-gray-300 focus:border-[#1e40af]'
                 }`}
-                onFocus={(e) => e.target.style.borderColor = mileageError ? '#fca5a5' : '#224380'}
-                onBlur={(e) => e.target.style.borderColor = mileageError ? '#fca5a5' : '#d1d5db'}
               />
               {mileage && !mileageError && (
                 <Check className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-green-500" />
               )}
             </div>
             {mileageError && (
-              <p className="text-sm text-red-600 mt-1">{mileageError}</p>
+              <p className="text-sm text-red-600">{mileageError}</p>
             )}
           </div>
 
@@ -557,20 +529,13 @@ const VehicleDetailsStep: React.FC<VehicleDetailsStepProps> = ({ onNext, initial
           <button 
             type="submit"
             disabled={showManualEntry ? !isManualFormValid : !isAutoFormValid}
-            className="w-full max-w-[520px] block text-white text-[21px] font-bold py-[20px] sm:py-[24px] px-[20px] rounded-[6px] mb-4 border-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-            style={{
-              backgroundColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
-              borderColor: (showManualEntry ? isManualFormValid : isAutoFormValid) ? '#eb4b00' : '#eb4b00',
-              color: 'white',
-              opacity: (showManualEntry ? isManualFormValid : isAutoFormValid) ? 1 : 0.5
-            }}
+            className="w-full bg-[#ea580c] hover:bg-[#dc2626] text-white text-lg font-semibold py-4 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 hover-scale"
           >
             Get My Quote
           </button>
         </form>
       </div>
     </div>
-  </section>
   );
 };
 
