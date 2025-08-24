@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,6 +19,9 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				sans: ['Poppins', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -26,8 +30,7 @@ export default {
 				foreground: 'hsl(var(--foreground))',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))',
-					glow: 'hsl(var(--primary-glow))'
+					foreground: 'hsl(var(--primary-foreground))'
 				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
@@ -52,21 +55,6 @@ export default {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
-				},
-				success: {
-					DEFAULT: 'hsl(var(--success))',
-					foreground: 'hsl(var(--success-foreground))'
-				},
-				warning: {
-					DEFAULT: 'hsl(var(--warning))',
-					foreground: 'hsl(var(--warning-foreground))'
-				},
-				warranty: {
-					blue: 'hsl(var(--warranty-blue))',
-					'blue-light': 'hsl(var(--warranty-blue-light))',
-					'blue-dark': 'hsl(var(--warranty-blue-dark))',
-					green: 'hsl(var(--warranty-green))',
-					orange: 'hsl(var(--warranty-orange))'
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -100,25 +88,98 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'breathing': {
+					'0%, 100%': {
+						transform: 'scale(1)',
+						boxShadow: '0 0 0 0 rgba(235, 75, 0, 0.7)'
+					},
+					'50%': {
+						transform: 'scale(1.05)',
+						boxShadow: '0 0 0 10px rgba(235, 75, 0, 0)'
+					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'car-drive': {
+					'0%, 100%': {
+						transform: 'translateX(-10px) translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateX(10px) translateY(-2px)'
+					}
+				},
+				'slide-right': {
+					'0%': {
+						transform: 'translateX(-100px)'
+					},
+					'100%': {
+						transform: 'translateX(100px)'
+					}
+				},
+				'car-progress': {
+					'0%, 100%': {
+						transform: 'translateX(-50%) translateY(0px)'
+					},
+					'50%': {
+						transform: 'translateX(-50%) translateY(-2px)'
+					}
+				},
+				'progress-fill': {
+					'0%': {
+						width: '20%'
+					},
+					'50%': {
+						width: '70%'
+					},
+					'100%': {
+						width: '90%'
+					}
+				},
+				'wind-lines': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(40px)'
+					},
+					'50%': {
+						opacity: '0.6'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'translateX(-40px)'
+					}
+				},
+				'fade-drift': {
+					'0%': {
+						opacity: '1',
+						transform: 'translateX(0px) scale(1)'
+					},
+					'100%': {
+						opacity: '0',
+						transform: 'translateX(50px) scale(0.8)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
-				'float': 'float 3s ease-in-out infinite'
-			},
-			backgroundImage: {
-				'gradient-hero': 'var(--gradient-hero)',
-				'gradient-card': 'var(--gradient-card)'
-			},
-			boxShadow: {
-				'card': 'var(--shadow-card)',
-				'button': 'var(--shadow-button)',
-				'warranty': '0 20px 40px -12px hsl(var(--warranty-blue) / 0.25)'
-			},
-			transitionProperty: {
-				'smooth': 'var(--transition-smooth)'
+				'breathing': 'breathing 2s ease-in-out infinite',
+				'fade-in': 'fade-in 0.5s ease-out forwards',
+				'spin-slow': 'spin 3s linear infinite',
+				'car-drive': 'car-drive 3s ease-in-out infinite',
+				'car-progress': 'car-progress 3s ease-in-out infinite',
+				'progress-fill': 'progress-fill 3s ease-in-out infinite',
+				'wind-lines': 'wind-lines 1.5s linear infinite',
+				'slide-right': 'slide-right 1s linear infinite',
+				'fade-drift': 'fade-drift 2s ease-out infinite'
 			}
 		}
 	},

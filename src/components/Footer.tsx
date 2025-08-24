@@ -1,93 +1,110 @@
-import { Shield, Phone, Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from "lucide-react";
+
+import React from 'react';
+import { Phone, Mail, Facebook, Instagram } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="bg-card border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <Shield className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold bg-gradient-hero bg-clip-text text-transparent">
-                Buy A Warranty
-              </span>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              UK's leading car warranty comparison platform. Find the perfect protection for your vehicle with our instant quote system.
-            </p>
-            <div className="flex space-x-4">
-              <Facebook className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
-              <Twitter className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
-              <Linkedin className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
-              <Instagram className="h-5 w-5 text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
+    <div className="px-4 pb-4">
+      <footer className="bg-[#2c5282] text-white relative overflow-hidden rounded-3xl w-4/5 mx-auto">
+        {/* Main footer section */}
+        <div className="py-12 relative z-10">
+          {/* Need help section */}
+          <div className="text-center mb-8">
+            <h3 className="text-2xl font-semibold mb-2">Need help?</h3>
+            <p className="text-lg mb-6">Our customer support team are here to help.</p>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
+              <a 
+                href="tel:0300456576" 
+                className="flex items-center gap-2 text-[#eb4b00] hover:text-orange-400 transition-colors font-medium text-lg"
+              >
+                <Phone size={20} />
+                Call us: 0300 456 576
+              </a>
+              
+              <a 
+                href="mailto:info@buyawarranty.co.uk" 
+                className="flex items-center gap-2 text-[#eb4b00] hover:text-orange-400 transition-colors font-medium text-lg"
+              >
+                <Mail size={20} />
+                Email us: info@buyawarranty.co.uk
+              </a>
             </div>
           </div>
 
-          {/* Products */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-card-foreground">Products</h3>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Basic Protection</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Complete Care</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Ultimate Shield</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Extended Warranties</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Commercial Cover</a></li>
-            </ul>
-          </div>
+          {/* Orange divider line */}
+          <div className="w-full h-px bg-[#eb4b00] my-8"></div>
 
-          {/* Support */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-card-foreground">Support</h3>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Help Centre</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Claims Process</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Find a Garage</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Live Chat</a></li>
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-card-foreground">Get in Touch</h3>
-            <div className="space-y-3 text-sm">
-              <div className="flex items-center space-x-2">
-                <Phone className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">0800 123 4567</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Mail className="h-4 w-4 text-primary" />
-                <span className="text-muted-foreground">hello@buyawarranty.co.uk</span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <MapPin className="h-4 w-4 text-primary mt-0.5" />
-                <span className="text-muted-foreground">
-                  123 Warranty House<br />
-                  London, EC1A 1BB<br />
-                  United Kingdom
-                </span>
-              </div>
+          {/* Footer content grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            {/* Logo section */}
+            <div className="flex justify-center lg:justify-start">
+              <img 
+                src="/lovable-uploads/ce43a78c-28ec-400b-8a16-1e98b15e0185.png" 
+                alt="Buy a Warranty" 
+                className="h-16 w-auto"
+              />
             </div>
+
+            {/* Navigation links */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <a 
+                href="/" 
+                className="text-white hover:text-[#eb4b00] transition-colors font-medium"
+              >
+                Home
+              </a>
+              <a 
+                href="/faq" 
+                className="text-white hover:text-[#eb4b00] transition-colors font-medium"
+              >
+                Frequently Asked Questions
+              </a>
+              <a 
+                href="/contact" 
+                className="text-white hover:text-[#eb4b00] transition-colors font-medium"
+              >
+                Contact
+              </a>
+            </div>
+
+            {/* Social media links */}
+            <div className="flex justify-center lg:justify-end gap-4">
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#eb4b00] transition-colors"
+              >
+                <Facebook size={20} />
+              </a>
+              <a 
+                href="https://twitter.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#eb4b00] transition-colors"
+              >
+                <X size={20} />
+              </a>
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-[#eb4b00] transition-colors"
+              >
+                <Instagram size={20} />
+              </a>
+            </div>
+          </div>
+
+          {/* Bottom section */}
+          <div className="mt-8 pt-4 border-t border-white/10 text-center text-sm text-gray-300">
+            <p>&copy; {new Date().getFullYear()} Buy a Warranty. All rights reserved.</p>
           </div>
         </div>
-
-        {/* Bottom Section */}
-        <div className="border-t border-border mt-8 pt-8">
-          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-            <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
-              <a href="#" className="hover:text-primary transition-colors">Cookie Policy</a>
-              <a href="#" className="hover:text-primary transition-colors">Complaints</a>
-            </div>
-            <div className="text-sm text-muted-foreground">
-              © 2024 Buy A Warranty. All rights reserved. Authorised and regulated by the FCA.
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </div>
   );
 };
 
