@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import RegistrationForm from '@/components/RegistrationForm';
-import PricingTable from '@/components/PricingTable';
-import SpecialVehiclePricing from '@/components/SpecialVehiclePricing';
+import MileageAndPricingStep from '@/components/MileageAndPricingStep';
 import CarJourneyProgress from '@/components/CarJourneyProgress';
 import QuoteDeliveryStep from '@/components/QuoteDeliveryStep';
 import CustomerDetailsStep from '@/components/CustomerDetailsStep';
@@ -57,7 +56,7 @@ const Index = () => {
     const stepParam = searchParams.get('step');
     if (stepParam) {
       const step = parseInt(stepParam);
-      return step >= 1 && step <= 4 ? step : 1;
+      return step >= 1 && step <= 3 ? step : 1;
     }
     return 1;
   };
@@ -161,8 +160,8 @@ const Index = () => {
           
           setVehicleData(restoredVehicleData);
           setFormData(prev => ({ ...prev, ...restoredVehicleData }));
-          setCurrentStep(3); // Go to step 3 (choose your plan)
-          updateStepInUrl(3);
+          setCurrentStep(2); // Go to step 2 (mileage + pricing)
+          updateStepInUrl(2);
           
           console.log('Quote data restored successfully:', restoredVehicleData);
         } catch (error) {
@@ -187,7 +186,7 @@ const Index = () => {
         if (restoredData.selectedPlan) {
           setSelectedPlan(restoredData.selectedPlan);
         }
-        const restoredStep = restoredData.step || 3;
+        const restoredStep = restoredData.step || 2;
         setCurrentStep(restoredStep);
         updateStepInUrl(restoredStep);
         
@@ -213,16 +212,15 @@ const Index = () => {
     };
   }, []);
   
-  const steps = ['Your Reg Plate', 'Receive Quote', 'Choose Your Plan', 'Final Details'];
+  const steps = ['Enter Registration', 'Get Quote & Pricing', 'Checkout'];
 
   const handleRegistrationComplete = (data: VehicleData) => {
     setVehicleData(data);
     setFormData({ ...formData, ...data });
-    // If manual entry was used, skip step 2 and go directly to pricing
-    const nextStep = data.isManualEntry ? 3 : 2;
-    setCurrentStep(nextStep);
-    updateStepInUrl(nextStep);
-    saveStateToLocalStorage(nextStep);
+    // Always go to step 2 (mileage + pricing)
+    setCurrentStep(2);
+    updateStepInUrl(2);
+    saveStateToLocalStorage(2);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -252,14 +250,14 @@ const Index = () => {
 
   const handlePlanSelected = (planId: string, paymentType: string, planName?: string, pricingData?: {totalPrice: number, monthlyPrice: number, voluntaryExcess: number, selectedAddOns: {[addon: string]: boolean}}) => {
     setSelectedPlan({ id: planId, paymentType, name: planName, pricingData });
-    setCurrentStep(4);
-    updateStepInUrl(4);
-    saveStateToLocalStorage(4);
+    setCurrentStep(3);
+    updateStepInUrl(3);
+    saveStateToLocalStorage(3);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     
     // Track plan selection for abandoned cart emails
     if (vehicleData) {
-      trackAbandonedCart(vehicleData, 4, planName, paymentType);
+      trackAbandonedCart(vehicleData, 3, planName, paymentType);
     }
   };
 
@@ -334,42 +332,16 @@ const Index = () => {
       )}
 
       {currentStep === 2 && vehicleData && (
-        <div className="w-full px-4 py-4 sm:py-8">
-          <div className="max-w-4xl mx-auto">
-            <QuoteDeliveryStep 
-              vehicleData={vehicleData}
-              onNext={handleQuoteDeliveryComplete}
-              onBack={() => handleBackToStep(1)}
-              onSkip={() => handleStepChange(3)}
-            />
-          </div>
+        <div className="w-full overflow-x-hidden">
+          <MileageAndPricingStep 
+            vehicleData={vehicleData}
+            onBack={() => handleBackToStep(1)} 
+            onPlanSelected={handlePlanSelected}
+          />
         </div>
       )}
 
       {currentStep === 3 && (
-        <div className="w-full overflow-x-hidden">
-          {vehicleData && (
-            <>
-              
-              {isSpecialVehicle ? (
-                <SpecialVehiclePricing 
-                  vehicleData={vehicleData as any}
-                  onBack={() => handleBackToStep(2)} 
-                  onPlanSelected={handlePlanSelected}
-                />
-              ) : (
-                <PricingTable 
-                  vehicleData={vehicleData} 
-                  onBack={() => handleBackToStep(2)} 
-                  onPlanSelected={handlePlanSelected}
-                />
-              )}
-            </>
-          )}
-        </div>
-      )}
-
-      {currentStep === 4 && (
         <>
           {vehicleData && selectedPlan ? (
             <CustomerDetailsStep
@@ -379,7 +351,7 @@ const Index = () => {
               planName={selectedPlan.name}
               pricingData={selectedPlan.pricingData}
               onNext={handleCustomerDetailsComplete}
-              onBack={() => handleBackToStep(3)}
+              onBack={() => handleBackToStep(2)}
             />
           ) : (
             <div className="w-full px-4 py-8">

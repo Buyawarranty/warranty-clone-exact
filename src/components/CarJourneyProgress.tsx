@@ -8,10 +8,9 @@ interface CarJourneyProgressProps {
 }
 
 const steps = [
-  { id: 1, title: 'Enter reg plate', description: 'Enter your vehicle details' },
-  { id: 2, title: 'Receive quote', description: 'Get your personalized quote' },
-  { id: 3, title: 'Choose your plan', description: 'Select your coverage options' },
-  { id: 4, title: 'Final details', description: 'Complete your purchase' }
+  { id: 1, title: 'Enter Registration', description: 'Enter your vehicle details' },
+  { id: 2, title: 'Get Quote & Pricing', description: 'Enter mileage and view plans' },
+  { id: 3, title: 'Checkout', description: 'Complete your purchase' }
 ];
 
 const CarJourneyProgress: React.FC<CarJourneyProgressProps> = ({ 
@@ -28,7 +27,7 @@ const CarJourneyProgress: React.FC<CarJourneyProgressProps> = ({
   }, [currentStep]);
 
   const getCarPosition = () => {
-    const progress = Math.min(Math.max((animatedStep - 1) / 3, 0), 1);
+    const progress = Math.min(Math.max((animatedStep - 1) / 2, 0), 1);
     return `${progress * 85 + 7.5}%`;
   };
 
@@ -54,7 +53,7 @@ const CarJourneyProgress: React.FC<CarJourneyProgressProps> = ({
         <div className="relative h-2 bg-gray-200 rounded-full">
           <div 
             className="h-full bg-[#1e40af] rounded-full transition-all duration-1000 ease-in-out"
-            style={{ width: `${Math.max(12.5 + (currentStep - 1) / 3 * 75, 12.5)}%` }}
+            style={{ width: `${Math.max(12.5 + (currentStep - 1) / 2 * 75, 12.5)}%` }}
           ></div>
         </div>
 
