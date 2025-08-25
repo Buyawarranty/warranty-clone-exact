@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import RegistrationForm from '@/components/RegistrationForm';
+import BuyawarrantyHomepage from '@/components/BuyawarrantyHomepage';
 import MileageAndPricingStep from '@/components/MileageAndPricingStep';
 import CarJourneyProgress from '@/components/CarJourneyProgress';
 import QuoteDeliveryStep from '@/components/QuoteDeliveryStep';
 import CustomerDetailsStep from '@/components/CustomerDetailsStep';
-import HeroSection from '@/components/HeroSection';
 import { supabase } from '@/integrations/supabase/client';
 
 
@@ -313,33 +312,7 @@ const Index = () => {
       {currentStep > 1 && <CarJourneyProgress currentStep={currentStep} onStepChange={handleStepChange} />}
       
       {currentStep === 1 && (
-        <HeroSection>
-          {/* Discount Message Banner */}
-          {searchParams.get('discountMessage') && (
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 animate-fade-in">
-              <div className="flex items-center gap-3">
-                <div className="text-green-600 text-2xl">🎉</div>
-                <div>
-                  <h3 className="text-green-800 font-bold text-lg">
-                    10% Discount Applied!
-                  </h3>
-                  <p className="text-green-700">
-                    {searchParams.get('discountMessage')}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-          
-          <RegistrationForm 
-            onNext={handleRegistrationComplete} 
-            onBack={(step: number) => handleBackToStep(step)}
-            onFormDataUpdate={handleFormDataUpdate}
-            initialData={formData}
-            currentStep={currentStep}
-            onStepChange={handleStepChange}
-          />
-        </HeroSection>
+        <BuyawarrantyHomepage />
       )}
 
       {currentStep === 2 && vehicleData && (
