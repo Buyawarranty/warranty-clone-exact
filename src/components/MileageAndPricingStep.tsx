@@ -361,15 +361,22 @@ const MileageAndPricingStep: React.FC<MileageAndPricingStepProps> = ({ vehicleDa
             </div>
 
             {/* Send Quote Button */}
-            <div className="mb-6">
-              <Button
-                onClick={handleSendQuote}
-                variant="outline"
-                className="flex items-center gap-2"
-              >
-                <Mail className="w-4 h-4" />
-                Email Quote
-              </Button>
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-4 bg-white rounded-2xl p-4 shadow-lg border border-gray-200">
+                <div className="p-3 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl">
+                  <Mail className="w-6 h-6 text-blue-600" />
+                </div>
+                <div className="text-left">
+                  <h3 className="font-semibold text-gray-900">Need time to decide?</h3>
+                  <p className="text-sm text-gray-600">We'll email your quote for later</p>
+                </div>
+                <button
+                  onClick={handleSendQuote}
+                  className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105 shadow-lg shadow-blue-200"
+                >
+                  Email Quote
+                </button>
+              </div>
             </div>
           </div>
 
@@ -388,76 +395,239 @@ const MileageAndPricingStep: React.FC<MileageAndPricingStepProps> = ({ vehicleDa
           ) : (
             <div className="max-w-7xl mx-auto px-4 pb-8">
               {/* Voluntary Excess Selection */}
-              <div className="text-center mb-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Choose Your Voluntary Excess</h3>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {[0, 50, 100, 150, 200].map((amount) => (
-                    <Button
-                      key={amount}
-                      variant={voluntaryExcess === amount ? "default" : "outline"}
-                      onClick={() => setVoluntaryExcess(amount)}
-                      className="min-w-[80px]"
-                    >
-                      £{amount}
-                    </Button>
-                  ))}
+              <div className="text-center mb-12">
+                <div className="inline-block p-8 bg-white rounded-3xl shadow-xl border border-gray-100">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Choose Your Voluntary Excess</h3>
+                  <p className="text-gray-600 mb-6">Lower excess = higher monthly cost, but less to pay if you claim</p>
+                  <div className="flex flex-wrap justify-center gap-3">
+                    {[0, 50, 100, 150, 200].map((amount) => (
+                      <button
+                        key={amount}
+                        onClick={() => setVoluntaryExcess(amount)}
+                        className={`group relative px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 ${
+                          voluntaryExcess === amount
+                            ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg shadow-blue-200'
+                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        }`}
+                      >
+                        <span className="relative z-10">£{amount}</span>
+                        {voluntaryExcess === amount && (
+                          <div className="absolute inset-0 bg-gradient-to-r from-blue-400/30 to-purple-400/30 rounded-xl blur-lg" />
+                        )}
+                        {amount === 50 && (
+                          <div className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-6 h-6 flex items-center justify-center font-bold">
+                            ★
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-4 text-sm text-gray-500">
+                    💡 Most customers choose £50 excess for the best balance
+                  </div>
                 </div>
               </div>
 
               {/* Plans Grid */}
-              <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {plans.map((plan, index) => {
                   const basePrice = calculatePlanPrice(plan);
                   const addOnPrice = calculateAddOnPrice(plan.id);
                   const monthlyTotal = basePrice + addOnPrice;
+                  const isPopular = index === 1;
                   
                   return (
                     <div
                       key={plan.id}
-                      className={`relative bg-white rounded-2xl shadow-lg border-2 ${
-                        index === 1 ? 'border-orange-500 scale-105' : 'border-gray-200'
-                      } overflow-hidden`}
+                      className={`group relative transition-all duration-300 ${
+                        isPopular ? 'transform scale-105' : 'hover:scale-105'
+                      }`}
                     >
-                      {index === 1 && (
-                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                          <Badge className="bg-orange-500 text-white px-4 py-1 text-sm font-bold">
-                            MOST POPULAR
-                          </Badge>
-                        </div>
-                      )}
+                      {/* Background glow effect */}
+                      <div className={`absolute inset-0 rounded-3xl blur-xl transition-all duration-300 ${
+                        isPopular 
+                          ? 'bg-gradient-to-r from-orange-400/30 to-red-400/30' 
+                          : 'bg-gradient-to-r from-blue-400/20 to-purple-400/20 opacity-0 group-hover:opacity-100'
+                      }`} />
                       
-                      <div className="p-6 text-center">
-                        <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                          {plan.name}
-                        </h3>
-                        <div className="text-4xl font-bold text-orange-600 mb-2">
-                          £{monthlyTotal}
-                        </div>
-                        <p className="text-gray-600 mb-6">per month</p>
+                      {/* Main card */}
+                      <div className={`relative bg-white rounded-3xl shadow-xl border-2 overflow-hidden transition-all duration-300 ${
+                        isPopular 
+                          ? 'border-orange-400 shadow-orange-200/50' 
+                          : 'border-gray-100 group-hover:border-blue-300 group-hover:shadow-blue-200/50'
+                      }`}>
                         
-                        <Button
-                          onClick={() => handleSelectPlan(plan)}
-                          disabled={loading[plan.id]}
-                          className={`w-full h-12 text-lg font-semibold ${
-                            index === 1
-                              ? 'bg-orange-500 hover:bg-orange-600'
-                              : 'bg-primary hover:bg-primary/90'
-                          }`}
-                        >
-                          {loading[plan.id] ? 'Processing...' : 'Select Plan'}
-                        </Button>
-                      </div>
-                      
-                      <div className="px-6 pb-6">
-                        <h4 className="font-semibold text-gray-900 mb-3">What's covered:</h4>
-                        <ul className="space-y-2">
-                          {plan.coverage.slice(0, 5).map((item, idx) => (
-                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                              <Check className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
+                        {/* Popular badge */}
+                        {isPopular && (
+                          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                            <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg animate-pulse">
+                              🔥 MOST POPULAR
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Header with gradient */}
+                        <div className={`h-2 ${
+                          isPopular 
+                            ? 'bg-gradient-to-r from-orange-500 to-red-500' 
+                            : 'bg-gradient-to-r from-blue-500 to-purple-500'
+                        }`} />
+                        
+                        <div className="p-8">
+                          {/* Plan name with icon */}
+                          <div className="text-center mb-6">
+                            <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
+                              isPopular 
+                                ? 'bg-gradient-to-r from-orange-100 to-red-100' 
+                                : 'bg-gradient-to-r from-blue-100 to-purple-100'
+                            }`}>
+                              <div className={`text-2xl font-bold ${
+                                isPopular ? 'text-orange-600' : 'text-blue-600'
+                              }`}>
+                                {plan.name === 'Basic' && '🛡️'}
+                                {plan.name === 'Gold' && '⭐'}
+                                {plan.name === 'Platinum' && '💎'}
+                              </div>
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                              {plan.name}
+                            </h3>
+                            <p className={`text-sm font-medium ${
+                              isPopular ? 'text-orange-600' : 'text-blue-600'
+                            }`}>
+                              {plan.name === 'Basic' && 'Essential Protection'}
+                              {plan.name === 'Gold' && 'Enhanced Coverage'}
+                              {plan.name === 'Platinum' && 'Ultimate Protection'}
+                            </p>
+                          </div>
+                          
+                          {/* Pricing */}
+                          <div className="text-center mb-8">
+                            <div className="flex items-center justify-center mb-2">
+                              <span className={`text-5xl font-bold ${
+                                isPopular ? 'text-orange-600' : 'text-blue-600'
+                              }`}>
+                                £{monthlyTotal}
+                              </span>
+                              <span className="text-gray-600 ml-2 text-lg">/month</span>
+                            </div>
+                            <div className="flex items-center justify-center gap-2">
+                              <span className="text-gray-500 line-through text-sm">
+                                £{Math.round(monthlyTotal * 1.2)}
+                              </span>
+                              <span className="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded-full">
+                                Save {Math.round(((monthlyTotal * 1.2) - monthlyTotal) / (monthlyTotal * 1.2) * 100)}%
+                              </span>
+                            </div>
+                          </div>
+                          
+                          {/* CTA Button */}
+                          <button
+                            onClick={() => handleSelectPlan(plan)}
+                            disabled={loading[plan.id]}
+                            className={`w-full h-14 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg ${
+                              isPopular
+                                ? 'bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white shadow-orange-200'
+                                : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-blue-200'
+                            } ${loading[plan.id] ? 'opacity-75 cursor-not-allowed' : ''}`}
+                          >
+                            {loading[plan.id] ? (
+                              <div className="flex items-center justify-center gap-2">
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                                Processing...
+                              </div>
+                            ) : (
+                              <div className="flex items-center justify-center gap-2">
+                                <span>Select {plan.name}</span>
+                                <span className="text-xl">→</span>
+                              </div>
+                            )}
+                          </button>
+                          
+                          {/* Trust indicators */}
+                          <div className="mt-4 flex items-center justify-center gap-4 text-xs text-gray-500">
+                            <div className="flex items-center gap-1">
+                              <span className="text-green-500">✓</span>
+                              Instant Cover
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <span className="text-green-500">✓</span>
+                              UK Support
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Features section */}
+                        <div className="px-8 pb-8">
+                          {/* Divider */}
+                          <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent mb-6" />
+                          
+                          <div className="space-y-4">
+                            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                              <span className={isPopular ? 'text-orange-500' : 'text-blue-500'}>✨</span>
+                              What's included:
+                            </h4>
+                            <div className="space-y-3">
+                              {plan.coverage.slice(0, 4).map((item, idx) => (
+                                <div key={idx} className="flex items-start gap-3 group/item">
+                                  <div className={`w-5 h-5 rounded-full flex items-center justify-center mt-0.5 transition-all duration-200 ${
+                                    isPopular 
+                                      ? 'bg-orange-100 group-hover/item:bg-orange-200' 
+                                      : 'bg-blue-100 group-hover/item:bg-blue-200'
+                                  }`}>
+                                    <Check className={`w-3 h-3 ${
+                                      isPopular ? 'text-orange-600' : 'text-blue-600'
+                                    }`} />
+                                  </div>
+                                  <span className="text-sm text-gray-700 leading-relaxed group-hover/item:text-gray-900 transition-colors duration-200">
+                                    {item}
+                                  </span>
+                                </div>
+                              ))}
+                              
+                              {plan.coverage.length > 4 && (
+                                <div className="flex items-center gap-3 pt-2">
+                                  <div className={`w-5 h-5 rounded-full flex items-center justify-center ${
+                                    isPopular ? 'bg-orange-100' : 'bg-blue-100'
+                                  }`}>
+                                    <Plus className={`w-3 h-3 ${
+                                      isPopular ? 'text-orange-600' : 'text-blue-600'
+                                    }`} />
+                                  </div>
+                                  <span className={`text-sm font-medium ${
+                                    isPopular ? 'text-orange-600' : 'text-blue-600'
+                                  }`}>
+                                    +{plan.coverage.length - 4} more benefits
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Value proposition */}
+                          <div className={`mt-6 p-4 rounded-2xl ${
+                            isPopular 
+                              ? 'bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200' 
+                              : 'bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200'
+                          }`}>
+                            <div className="text-center">
+                              <div className={`text-lg font-bold ${
+                                isPopular ? 'text-orange-800' : 'text-blue-800'
+                              }`}>
+                                {plan.name === 'Basic' && '💡 Smart Choice'}
+                                {plan.name === 'Gold' && '🎯 Best Value'}
+                                {plan.name === 'Platinum' && '👑 Premium Experience'}
+                              </div>
+                              <p className={`text-sm ${
+                                isPopular ? 'text-orange-700' : 'text-blue-700'
+                              }`}>
+                                {plan.name === 'Basic' && 'Perfect for essential protection'}
+                                {plan.name === 'Gold' && 'Most customers choose this plan'}
+                                {plan.name === 'Platinum' && 'Complete peace of mind'}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   );
