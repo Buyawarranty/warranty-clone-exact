@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import VehicleDetailsStep from './VehicleDetailsStep';
+import VehicleRegistrationStep from './VehicleRegistrationStep';
+import VehicleMileageStep from './VehicleMileageStep';
 
 interface RegistrationFormProps {
   onNext: (data: { regNumber: string; mileage: string; email: string; phone: string; firstName: string; lastName: string; address: string; make?: string; model?: string; fuelType?: string; transmission?: string; year?: string; isManualEntry?: boolean }) => void;
@@ -42,8 +43,14 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
   onStepChange
 }) => {
   console.log('RegistrationForm rendering...');
+  const [vehicleRegData, setVehicleRegData] = useState<{ regNumber: string; vehicleData?: any; isManualEntry?: boolean } | null>(null);
   
-  const handleVehicleNext = (data: VehicleData) => {
+  const handleRegNext = (data: { regNumber: string; vehicleData?: any; isManualEntry?: boolean }) => {
+    setVehicleRegData(data);
+    onStepChange(1.5); // Use 1.5 to indicate mileage substep
+  };
+
+  const handleMileageNext = (data: VehicleData) => {
     onFormDataUpdate?.(data);
     // Pass empty contact details since we'll collect them in step 2
     onNext({
@@ -56,14 +63,25 @@ const RegistrationForm: React.FC<RegistrationFormProps> = ({
     });
   };
 
+  const handleBackToReg = () => {
+    setVehicleRegData(null);
+    onStepChange(1);
+  };
+
+  // Show mileage step if we have vehicle registration data
+  if (vehicleRegData) {
+    return (
+      <VehicleMileageStep 
+        vehicleData={vehicleRegData}
+        onNext={handleMileageNext}
+        onBack={handleBackToReg}
+      />
+    );
+  }
+
   return (
-    <VehicleDetailsStep 
-      onNext={handleVehicleNext}
-      initialData={initialData}
-      onBack={onBack ? () => onBack(1) : undefined}
-      onFormDataUpdate={onFormDataUpdate}
-      currentStep={currentStep}
-      onStepChange={onStepChange}
+    <VehicleRegistrationStep 
+      onNext={handleRegNext}
     />
   );
 };
