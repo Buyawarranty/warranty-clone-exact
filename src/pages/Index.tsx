@@ -55,8 +55,12 @@ const Index = () => {
   const getStepFromUrl = () => {
     const stepParam = searchParams.get('step');
     if (stepParam) {
-      const step = parseInt(stepParam);
-      return step >= 1 && step <= 3 ? step : 1;
+      const step = parseFloat(stepParam);
+      // Handle old step 1.5 by redirecting to step 1
+      if (step === 1.5) {
+        return 1;
+      }
+      return step >= 1 && step <= 3 && Number.isInteger(step) ? step : 1;
     }
     return 1;
   };
@@ -116,6 +120,13 @@ const Index = () => {
     // Load saved state on initial load
     const savedState = loadStateFromLocalStorage();
     const stepFromUrl = getStepFromUrl();
+    
+    // If we're at step 1.5 (old mileage step), redirect to step 1
+    if (searchParams.get('step') === '1.5') {
+      setCurrentStep(1);
+      updateStepInUrl(1);
+      return;
+    }
 
     // Check for quote parameter from email links
     const quoteParam = searchParams.get('quote');
