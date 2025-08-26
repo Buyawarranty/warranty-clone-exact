@@ -39,14 +39,6 @@ const CarJourneyProgress: React.FC<CarJourneyProgressProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto py-6 px-4">
-      {/* Brand Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold">
-          <span className="text-[#1e40af]">buya</span>
-          <span className="text-[#ea580c]">warranty</span>
-        </h1>
-      </div>
-
       {/* Progress Container */}
       <div className="relative">
         {/* Progress Line */}
