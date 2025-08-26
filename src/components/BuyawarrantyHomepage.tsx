@@ -23,14 +23,23 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
     setIsSearching(true);
     setVehicleNotFound(false);
 
+    // Add timeout to prevent infinite loading
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timeout')), 15000)
+    );
+
     try {
-      const { data, error } = await supabase.functions.invoke('dvla-vehicle-lookup', {
+      const apiCall = supabase.functions.invoke('dvla-vehicle-lookup', {
         body: { registrationNumber: regNumber.trim() }
       });
+
+      const result = await Promise.race([apiCall, timeoutPromise]) as any;
+      const { data, error } = result;
 
       if (error) {
         console.error('DVLA lookup error:', error);
         setVehicleNotFound(true);
+        setIsExpanded(true);
       } else if (data?.found) {
         setVehicleData(data);
         setIsExpanded(true);
