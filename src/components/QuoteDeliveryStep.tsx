@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Eye, ArrowLeft } from 'lucide-react';
+import { Mail, Eye, ArrowLeft, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface QuoteDeliveryStepProps {
@@ -41,13 +41,8 @@ const QuoteDeliveryStep = ({ onBack, onViewQuote, onEmailQuote }: QuoteDeliveryS
             
             {/* Car Icon - positioned between step 1 and 2 */}
             <div className="absolute left-1/4 transform -translate-x-1/2 z-20">
-              <div className="bg-orange-500 p-2 rounded-full shadow-lg">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17H17L19 9H5L7 17Z" fill="white"/>
-                  <path d="M6 6L4 9H20L18 6H6Z" fill="white"/>
-                  <circle cx="9" cy="19" r="2" fill="white"/>
-                  <circle cx="15" cy="19" r="2" fill="white"/>
-                </svg>
+              <div className="bg-orange-500 p-3 rounded-full shadow-lg">
+                <Car className="w-6 h-6 text-white" />
               </div>
             </div>
             
