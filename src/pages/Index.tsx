@@ -312,7 +312,7 @@ const Index = () => {
       {currentStep > 1 && <CarJourneyProgress currentStep={currentStep} onStepChange={handleStepChange} />}
       
       {currentStep === 1 && (
-        <BuyawarrantyHomepage />
+        <BuyawarrantyHomepage onRegistrationComplete={handleRegistrationComplete} />
       )}
 
       {currentStep === 2 && vehicleData && (

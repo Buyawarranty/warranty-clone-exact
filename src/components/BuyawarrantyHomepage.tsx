@@ -3,21 +3,35 @@ import { Star, ChevronDown, Play, Car, Truck, Bike } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
-const BuyawarrantyHomepage = () => {
+interface BuyawarrantyHomepageProps {
+  onRegistrationComplete?: (data: any) => void;
+}
+
+const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepageProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [regNumber, setRegNumber] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
 
   const handleGetQuote = () => {
     console.log('Get quote clicked, regNumber:', regNumber);
-    console.log('regNumber length:', regNumber.length);
-    console.log('regNumber trimmed:', regNumber.trim());
-    console.log('Current isExpanded:', isExpanded);
     
     if (regNumber.trim()) {
-      console.log('Expanding section...');
-      setIsExpanded(true);
-      console.log('After setIsExpanded(true)');
+      if (onRegistrationComplete) {
+        // Navigate to step 2 with vehicle data
+        onRegistrationComplete({
+          regNumber: regNumber.trim(),
+          mileage: '',
+          email: '',
+          phone: '',
+          firstName: '',
+          lastName: '',
+          address: '',
+          vehicleType: 'car'
+        });
+      } else {
+        // Fallback: just expand the section
+        setIsExpanded(true);
+      }
     } else {
       console.log('No registration number entered');
     }
