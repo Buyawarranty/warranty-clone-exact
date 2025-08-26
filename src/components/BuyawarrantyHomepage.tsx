@@ -10,30 +10,30 @@ interface BuyawarrantyHomepageProps {
 const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepageProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [regNumber, setRegNumber] = useState('');
+  const [mileage, setMileage] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
 
   const handleGetQuote = () => {
     console.log('Get quote clicked, regNumber:', regNumber);
     
-    if (regNumber.trim()) {
-      if (onRegistrationComplete) {
-        // Navigate to step 2 with vehicle data
-        onRegistrationComplete({
-          regNumber: regNumber.trim(),
-          mileage: '',
-          email: '',
-          phone: '',
-          firstName: '',
-          lastName: '',
-          address: '',
-          vehicleType: 'car'
-        });
-      } else {
-        // Fallback: just expand the section
-        setIsExpanded(true);
-      }
-    } else {
-      console.log('No registration number entered');
+    if (regNumber.trim() && !isExpanded) {
+      // First click - expand the form
+      setIsExpanded(true);
+    } else if (regNumber.trim() && mileage.trim() && onRegistrationComplete) {
+      // Second click with mileage - proceed to next step
+      onRegistrationComplete({
+        regNumber: regNumber.trim(),
+        mileage: mileage.trim(),
+        email: '',
+        phone: '',
+        firstName: '',
+        lastName: '',
+        address: '',
+        vehicleType: 'car',
+        make: 'VOLKSWAGEN',
+        model: 'GOLF',
+        year: '2019'
+      });
     }
   };
 
@@ -129,14 +129,49 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                     disabled={!regNumber.trim()}
                     className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors"
                   >
-                    Get my quote
+                    {isExpanded ? 'Get my quote' : 'Get my quote'}
                   </button>
+                  
+                  {/* Expanded Vehicle Details Section */}
+                  {isExpanded && (
+                    <div className="mt-6 space-y-4">
+                      <div className="text-sm text-gray-600">
+                        We found the following vehicle:
+                      </div>
+                      
+                      <div className="bg-gray-50 border rounded-lg p-3">
+                        <div className="text-sm font-medium text-gray-900">2019 • VOLKSWAGEN • GOLF • Petrol • Manual</div>
+                        <div className="text-xs text-gray-500 mt-1">MOT: Nov 29 • Tax Status: Taxed</div>
+                      </div>
+                      
+                      <button className="text-sm text-blue-600 hover:underline">
+                        This is not my vehicle
+                      </button>
+                      
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-gray-700">
+                          What's your approximate mileage?
+                        </label>
+                        <Input
+                          type="text"
+                          placeholder="e.g. 15,000"
+                          value={mileage}
+                          onChange={(e) => setMileage(e.target.value)}
+                          className="h-10"
+                        />
+                      </div>
+                      
+                      <div className="text-xs text-gray-500">
+                        We can only provide warranty for vehicles with a maximum mileage of 100,000
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Progress Bar */}
                 <div className="mt-4">
                   <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-blue-500 h-2 rounded-full w-1/3"></div>
+                    <div className={`bg-blue-500 h-2 rounded-full transition-all duration-300 ${isExpanded ? 'w-2/3' : 'w-1/3'}`}></div>
                   </div>
                 </div>
               </div>
@@ -179,8 +214,8 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         </div>
       </div>
 
-      {/* Expandable Section */}
-      {isExpanded && (
+      {/* Only show expandable section if not expanded in main form */}
+      {isExpanded && false && (
         <div className="bg-gray-50 py-16 border-t">
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16">
