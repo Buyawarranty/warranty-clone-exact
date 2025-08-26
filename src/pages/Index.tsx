@@ -347,10 +347,11 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
                 body: {
-                  planId: 'warranty_plan',
+                  planId: 'basic',
                   vehicleData,
-                  paymentType: 'full',
-                  amount
+                  paymentType: 'yearly',
+                  voluntaryExcess: 0,
+                  finalAmount: amount
                 }
               });
               
@@ -368,9 +369,22 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-bumper-checkout', {
                 body: {
-                  planId: 'warranty_plan',
+                  planId: 'basic',
                   vehicleData,
-                  paymentType: 'monthly'
+                  paymentType: 'monthly',
+                  voluntaryExcess: 0,
+                  customerData: {
+                    email: vehicleData.email || 'guest@buyawarranty.co.uk',
+                    first_name: vehicleData.firstName || '',
+                    last_name: vehicleData.lastName || '',
+                    mobile: vehicleData.phone || '',
+                    vehicle_reg: vehicleData.regNumber || '',
+                    street: vehicleData.address || '',
+                    town: '',
+                    county: '',
+                    postcode: '',
+                    country: 'UK'
+                  }
                 }
               });
               
