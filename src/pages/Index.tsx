@@ -308,8 +308,8 @@ const Index = () => {
   
   return (
     <div className="bg-[#e8f4fb] min-h-screen overflow-x-hidden">
-      {/* Show progress bar on all steps */}
-      <CarJourneyProgress currentStep={currentStep >= 2.5 ? 2 : currentStep} onStepChange={handleStepChange} />
+      {/* Show progress bar after step 1 */}
+      {currentStep > 1 && <CarJourneyProgress currentStep={currentStep >= 2.5 ? 2 : currentStep} onStepChange={handleStepChange} />}
       
       {currentStep === 1 && (
         <BuyawarrantyHomepage onRegistrationComplete={handleRegistrationComplete} />
