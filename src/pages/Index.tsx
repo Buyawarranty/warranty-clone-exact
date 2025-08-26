@@ -347,7 +347,7 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
                 body: {
-                  planId: 'basic',
+                  planId: 'platinum',
                   vehicleData,
                   paymentType: 'yearly',
                   voluntaryExcess: 0,
@@ -369,7 +369,7 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-bumper-checkout', {
                 body: {
-                  planId: 'basic',
+                  planId: 'platinum',
                   vehicleData,
                   paymentType: 'monthly',
                   voluntaryExcess: 0,
