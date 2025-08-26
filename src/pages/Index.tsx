@@ -344,6 +344,7 @@ const Index = () => {
           vehicleData={vehicleData}
           onBack={() => handleBackToStep(2)}
           onStripePayment={async (amount) => {
+            console.log('Stripe payment initiated', { amount, vehicleData, formData });
             try {
               const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
                 body: {
@@ -351,14 +352,29 @@ const Index = () => {
                   vehicleData,
                   paymentType: 'yearly',
                   voluntaryExcess: 0,
-                  finalAmount: amount
+                  finalAmount: amount,
+                  customerData: {
+                    first_name: formData.firstName || vehicleData.firstName || 'Guest',
+                    last_name: formData.lastName || vehicleData.lastName || 'Customer',
+                    email: formData.email || vehicleData.email || 'guest@buyawarranty.co.uk',
+                    phone: formData.phone || vehicleData.phone || '',
+                    mobile: formData.phone || vehicleData.phone || '',
+                    vehicle_reg: vehicleData.regNumber || ''
+                  }
                 }
               });
               
-              if (error) throw error;
+              if (error) {
+                console.error('Stripe checkout error:', error);
+                toast.error('Failed to create checkout session');
+                return;
+              }
               
               if (data?.url) {
-                window.open(data.url, '_blank');
+                window.location.href = data.url;
+              } else {
+                console.error('No checkout URL received');
+                toast.error('Failed to redirect to checkout');
               }
             } catch (error) {
               toast.error('Failed to create Stripe checkout');
@@ -366,6 +382,7 @@ const Index = () => {
             }
           }}
           onBumperPayment={async () => {
+            console.log('Bumper payment initiated', { vehicleData, formData });
             try {
               const { data, error } = await supabase.functions.invoke('create-bumper-checkout', {
                 body: {
@@ -374,12 +391,12 @@ const Index = () => {
                   paymentType: 'monthly',
                   voluntaryExcess: 0,
                   customerData: {
-                    email: vehicleData.email || 'guest@buyawarranty.co.uk',
-                    first_name: vehicleData.firstName || 'Guest',
-                    last_name: vehicleData.lastName || 'Customer',
-                    mobile: vehicleData.phone || '',
+                    email: formData.email || vehicleData.email || 'guest@buyawarranty.co.uk',
+                    first_name: formData.firstName || vehicleData.firstName || 'Guest',
+                    last_name: formData.lastName || vehicleData.lastName || 'Customer',
+                    mobile: formData.phone || vehicleData.phone || '',
                     vehicle_reg: vehicleData.regNumber || '',
-                    street: vehicleData.address || '',
+                    street: formData.address || vehicleData.address || '',
                     town: '',
                     county: '',
                     postcode: '',
@@ -388,13 +405,20 @@ const Index = () => {
                 }
               });
               
-              if (error) throw error;
+              if (error) {
+                console.error('Bumper checkout error:', error);
+                toast.error('Failed to create Bumper checkout');
+                return;
+              }
               
               if (data?.url) {
-                window.open(data.url, '_blank');
+                window.location.href = data.url;
               } else if (data?.stripeUrl) {
                 // Fallback to Stripe if Bumper is not available
-                window.open(data.stripeUrl, '_blank');
+                window.location.href = data.stripeUrl;
+              } else {
+                console.error('No checkout URL received');
+                toast.error('Failed to redirect to checkout');
               }
             } catch (error) {
               toast.error('Failed to create Bumper checkout');
