@@ -6,7 +6,9 @@ import MileageAndPricingStep from '@/components/MileageAndPricingStep';
 import CarJourneyProgress from '@/components/CarJourneyProgress';
 import QuoteDeliveryStep from '@/components/QuoteDeliveryStep';
 import CustomerDetailsStep from '@/components/CustomerDetailsStep';
+import VehicleCheckoutStep from '@/components/VehicleCheckoutStep';
 import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
 
 
 interface VehicleData {
@@ -316,8 +318,8 @@ const Index = () => {
       {currentStep === 2 && vehicleData && (
         <QuoteDeliveryStep 
           onBack={() => handleBackToStep(1)}
-          onViewQuote={() => handleStepChange(2.5)}
-          onEmailQuote={() => handleStepChange(2.5)}
+          onViewQuote={() => handleStepChange(3)}
+          onEmailQuote={() => handleStepChange(3)}
           showProgress={true}
           currentStep={2}
         />
@@ -337,7 +339,22 @@ const Index = () => {
         </div>
       )}
 
-      {currentStep === 3 && (
+      {currentStep === 3 && vehicleData && (
+        <VehicleCheckoutStep
+          vehicleData={vehicleData}
+          onBack={() => handleBackToStep(2)}
+          onPayNow={(paymentType, amount) => {
+            toast.success(`Processing ${paymentType} payment of £${amount}`);
+            // Handle payment processing here
+          }}
+          onFinance={() => {
+            toast.success('Redirecting to finance application...');
+            // Handle finance application here
+          }}
+        />
+      )}
+
+      {currentStep === 4 && (
         <>
           {vehicleData && selectedPlan ? (
             <>
