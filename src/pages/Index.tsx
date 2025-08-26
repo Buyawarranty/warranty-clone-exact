@@ -314,17 +314,13 @@ const Index = () => {
       )}
 
       {currentStep === 2 && vehicleData && (
-        <>
-          <QuoteDeliveryStep 
-            onBack={() => handleBackToStep(1)}
-            onViewQuote={() => handleStepChange(2.5)}
-            onEmailQuote={() => handleStepChange(2.5)}
-          />
-          {/* Progress bar positioned after QuoteDeliveryStep header */}
-          <div className="bg-[#e8f4fb]">
-            <CarJourneyProgress currentStep={2} onStepChange={handleStepChange} />
-          </div>
-        </>
+        <QuoteDeliveryStep 
+          onBack={() => handleBackToStep(1)}
+          onViewQuote={() => handleStepChange(2.5)}
+          onEmailQuote={() => handleStepChange(2.5)}
+          showProgress={true}
+          currentStep={2}
+        />
       )}
 
       {currentStep === 2.5 && vehicleData && (

@@ -1,14 +1,17 @@
 import React from 'react';
 import { Mail, Eye, ArrowLeft, Car } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import CarJourneyProgress from './CarJourneyProgress';
 
 interface QuoteDeliveryStepProps {
   onBack?: () => void;
   onViewQuote?: () => void;
   onEmailQuote?: () => void;
+  showProgress?: boolean;
+  currentStep?: number;
 }
 
-const QuoteDeliveryStep = ({ onBack, onViewQuote, onEmailQuote }: QuoteDeliveryStepProps) => {
+const QuoteDeliveryStep = ({ onBack, onViewQuote, onEmailQuote, showProgress = true, currentStep = 2 }: QuoteDeliveryStepProps) => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -26,6 +29,13 @@ const QuoteDeliveryStep = ({ onBack, onViewQuote, onEmailQuote }: QuoteDeliveryS
           </nav>
         </div>
       </header>
+
+      {/* Progress Bar - placed right after header */}
+      {showProgress && (
+        <div className="bg-gray-50">
+          <CarJourneyProgress currentStep={currentStep} />
+        </div>
+      )}
 
       {/* Main Content */}
       <div className="max-w-2xl mx-auto px-4 py-16">
