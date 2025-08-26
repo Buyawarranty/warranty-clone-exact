@@ -8,9 +8,14 @@ const BuyawarrantyHomepage = () => {
   const [regNumber, setRegNumber] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
 
-  const handleGetQuote = () => {
+  const handleGetQuote = (e) => {
+    e.preventDefault();
+    console.log('Get quote clicked, regNumber:', regNumber);
     if (regNumber.trim()) {
+      console.log('Expanding section...');
       setIsExpanded(true);
+    } else {
+      console.log('No registration number entered');
     }
   };
 
@@ -102,9 +107,10 @@ const BuyawarrantyHomepage = () => {
                   </div>
                   
                   <Button 
+                    type="button"
                     onClick={handleGetQuote}
                     disabled={!regNumber.trim()}
-                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50"
+                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 cursor-pointer"
                   >
                     Get my quote
                   </Button>
