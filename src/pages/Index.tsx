@@ -343,13 +343,49 @@ const Index = () => {
         <VehicleCheckoutStep
           vehicleData={vehicleData}
           onBack={() => handleBackToStep(2)}
-          onStripePayment={(amount) => {
-            toast.success(`Processing Stripe payment of £${amount}`);
-            // Handle Stripe payment processing here
+          onStripePayment={async (amount) => {
+            try {
+              const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
+                body: {
+                  planId: 'warranty_plan',
+                  vehicleData,
+                  paymentType: 'full',
+                  amount
+                }
+              });
+              
+              if (error) throw error;
+              
+              if (data?.url) {
+                window.open(data.url, '_blank');
+              }
+            } catch (error) {
+              toast.error('Failed to create Stripe checkout');
+              console.error('Stripe checkout error:', error);
+            }
           }}
-          onBumperPayment={() => {
-            toast.success('Redirecting to Bumper finance application...');
-            // Handle Bumper finance application here
+          onBumperPayment={async () => {
+            try {
+              const { data, error } = await supabase.functions.invoke('create-bumper-checkout', {
+                body: {
+                  planId: 'warranty_plan',
+                  vehicleData,
+                  paymentType: 'monthly'
+                }
+              });
+              
+              if (error) throw error;
+              
+              if (data?.url) {
+                window.open(data.url, '_blank');
+              } else if (data?.stripeUrl) {
+                // Fallback to Stripe if Bumper is not available
+                window.open(data.stripeUrl, '_blank');
+              }
+            } catch (error) {
+              toast.error('Failed to create Bumper checkout');
+              console.error('Bumper checkout error:', error);
+            }
           }}
         />
       )}
