@@ -343,13 +343,13 @@ const Index = () => {
         <VehicleCheckoutStep
           vehicleData={vehicleData}
           onBack={() => handleBackToStep(2)}
-          onPayNow={(paymentType, amount) => {
-            toast.success(`Processing ${paymentType} payment of £${amount}`);
-            // Handle payment processing here
+          onStripePayment={(amount) => {
+            toast.success(`Processing Stripe payment of £${amount}`);
+            // Handle Stripe payment processing here
           }}
-          onFinance={() => {
-            toast.success('Redirecting to finance application...');
-            // Handle finance application here
+          onBumperPayment={() => {
+            toast.success('Redirecting to Bumper finance application...');
+            // Handle Bumper finance application here
           }}
         />
       )}

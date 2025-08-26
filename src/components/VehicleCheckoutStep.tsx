@@ -7,11 +7,11 @@ import CarJourneyProgress from './CarJourneyProgress';
 interface VehicleCheckoutStepProps {
   vehicleData: any;
   onBack?: () => void;
-  onPayNow?: (paymentType: string, amount: number) => void;
-  onFinance?: () => void;
+  onStripePayment?: (amount: number) => void;
+  onBumperPayment?: () => void;
 }
 
-const VehicleCheckoutStep = ({ vehicleData, onBack, onPayNow, onFinance }: VehicleCheckoutStepProps) => {
+const VehicleCheckoutStep = ({ vehicleData, onBack, onStripePayment, onBumperPayment }: VehicleCheckoutStepProps) => {
   const [selectedPlan, setSelectedPlan] = useState('1year');
   const [paymentType, setPaymentType] = useState('full');
 
@@ -226,7 +226,7 @@ const VehicleCheckoutStep = ({ vehicleData, onBack, onPayNow, onFinance }: Vehic
 
                 <Button 
                   className="w-full bg-green-500 hover:bg-green-600"
-                  onClick={() => onPayNow?.('full', currentPlan.price)}
+                  onClick={() => onStripePayment?.(currentPlan.price)}
                 >
                   Pay £{currentPlan.price} Now →
                 </Button>
@@ -269,7 +269,7 @@ const VehicleCheckoutStep = ({ vehicleData, onBack, onPayNow, onFinance }: Vehic
 
                 <Button 
                   className="w-full bg-blue-500 hover:bg-blue-600"
-                  onClick={onFinance}
+                  onClick={onBumperPayment}
                 >
                   Apply for Finance →
                 </Button>
