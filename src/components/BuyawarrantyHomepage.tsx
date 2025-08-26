@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Star, ChevronDown, Play, Car, Truck, Bike } from 'lucide-react';
+import { Star, ChevronDown, Play, Car, Truck, Bike, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
 
 interface BuyawarrantyHomepageProps {
   onRegistrationComplete?: (data: any) => void;
@@ -12,15 +13,54 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
   const [regNumber, setRegNumber] = useState('');
   const [mileage, setMileage] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
+  const [isSearching, setIsSearching] = useState(false);
+  const [vehicleData, setVehicleData] = useState<any>(null);
+  const [vehicleNotFound, setVehicleNotFound] = useState(false);
+
+  const handleSearchVehicle = async () => {
+    if (!regNumber.trim()) return;
+
+    setIsSearching(true);
+    setVehicleNotFound(false);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('dvla-vehicle-lookup', {
+        body: { registrationNumber: regNumber.trim() }
+      });
+
+      if (error) {
+        console.error('DVLA lookup error:', error);
+        setVehicleNotFound(true);
+      } else if (data?.found) {
+        setVehicleData(data);
+        setIsExpanded(true);
+      } else {
+        setVehicleNotFound(true);
+        setIsExpanded(true);
+      }
+    } catch (error) {
+      console.error('Error calling DVLA API:', error);
+      setVehicleNotFound(true);
+      setIsExpanded(true);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const handleGetQuote = () => {
-    console.log('Get quote clicked, regNumber:', regNumber);
-    
-    if (regNumber.trim() && !isExpanded) {
-      // First click - expand the form
-      setIsExpanded(true);
-    } else if (regNumber.trim() && mileage.trim() && onRegistrationComplete) {
-      // Second click with mileage - proceed to next step
+    if (regNumber.trim() && mileage.trim() && onRegistrationComplete) {
+      const vehicleInfo = vehicleData ? {
+        make: vehicleData.make,
+        model: vehicleData.model || 'Unknown',
+        year: vehicleData.yearOfManufacture.toString(),
+        vehicleType: vehicleData.vehicleType
+      } : {
+        make: 'UNKNOWN',
+        model: 'UNKNOWN',
+        year: '2020',
+        vehicleType: 'car'
+      };
+
       onRegistrationComplete({
         regNumber: regNumber.trim(),
         mileage: mileage.trim(),
@@ -29,10 +69,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         firstName: '',
         lastName: '',
         address: '',
-        vehicleType: 'car',
-        make: 'VOLKSWAGEN',
-        model: 'GOLF',
-        year: '2019'
+        ...vehicleInfo
       });
     }
   };
@@ -125,28 +162,78 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   </div>
                   
                   <button 
-                    onClick={handleGetQuote}
-                    disabled={!regNumber.trim()}
-                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors"
+                    onClick={handleSearchVehicle}
+                    disabled={!regNumber.trim() || isSearching}
+                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors flex items-center justify-center"
                   >
-                    {isExpanded ? 'Get my quote' : 'Get my quote'}
+                    {isSearching ? (
+                      <>
+                        <Loader className="w-5 h-5 mr-2 animate-spin" />
+                        Searching vehicle...
+                      </>
+                    ) : (
+                      'Search vehicle'
+                    )}
                   </button>
                   
                   {/* Expanded Vehicle Details Section */}
                   {isExpanded && (
                     <div className="mt-6 space-y-4">
-                      <div className="text-sm text-gray-600">
-                        We found the following vehicle:
-                      </div>
-                      
-                      <div className="bg-gray-50 border rounded-lg p-3">
-                        <div className="text-sm font-medium text-gray-900">2019 • VOLKSWAGEN • GOLF • Petrol • Manual</div>
-                        <div className="text-xs text-gray-500 mt-1">MOT: Nov 29 • Tax Status: Taxed</div>
-                      </div>
-                      
-                      <button className="text-sm text-blue-600 hover:underline">
-                        This is not my vehicle
-                      </button>
+                      {vehicleData && !vehicleNotFound ? (
+                        <>
+                          <div className="text-sm text-gray-600">
+                            We found the following vehicle:
+                          </div>
+                          
+                          <div className="bg-gray-50 border rounded-lg p-3">
+                            <div className="text-sm font-medium text-gray-900">
+                              {vehicleData.yearOfManufacture} • {vehicleData.make} • {vehicleData.model || 'Unknown Model'} • {vehicleData.fuelType} • {vehicleData.transmission || 'Unknown'}
+                            </div>
+                            <div className="text-xs text-gray-500 mt-1">
+                              MOT: {vehicleData.motStatus} • Tax Status: {vehicleData.taxStatus}
+                            </div>
+                          </div>
+                          
+                          <button 
+                            onClick={() => setVehicleNotFound(true)}
+                            className="text-sm text-blue-600 hover:underline"
+                          >
+                            This is not my vehicle
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <div className="text-sm text-gray-600">
+                            {vehicleNotFound ? 'Vehicle not found. Please enter details manually:' : 'Please confirm your vehicle details:'}
+                          </div>
+                          
+                          <div className="bg-gray-50 border rounded-lg p-3 space-y-3">
+                            <div className="grid grid-cols-2 gap-3">
+                              <Input placeholder="Make (e.g. Ford)" className="h-10" />
+                              <Input placeholder="Model (e.g. Focus)" className="h-10" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                              <Input placeholder="Year (e.g. 2020)" className="h-10" />
+                              <select className="h-10 px-3 rounded-md border border-input bg-background">
+                                <option>Fuel Type</option>
+                                <option>Petrol</option>
+                                <option>Diesel</option>
+                                <option>Electric</option>
+                                <option>Hybrid</option>
+                              </select>
+                            </div>
+                          </div>
+                          
+                          {vehicleData && (
+                            <button 
+                              onClick={() => setVehicleNotFound(false)}
+                              className="text-sm text-blue-600 hover:underline"
+                            >
+                              Back to found vehicle
+                            </button>
+                          )}
+                        </>
+                      )}
                       
                       <div className="space-y-2">
                         <label className="text-sm font-medium text-gray-700">
@@ -160,6 +247,14 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                           className="h-10"
                         />
                       </div>
+                      
+                      <button 
+                        onClick={handleGetQuote}
+                        disabled={!regNumber.trim() || !mileage.trim()}
+                        className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors"
+                      >
+                        Get my quote
+                      </button>
                       
                       <div className="text-xs text-gray-500">
                         We can only provide warranty for vehicles with a maximum mileage of 100,000

@@ -316,10 +316,18 @@ const Index = () => {
       )}
 
       {currentStep === 2 && vehicleData && (
+        <QuoteDeliveryStep 
+          onBack={() => handleBackToStep(1)}
+          onViewQuote={() => handleStepChange(2.5)}
+          onEmailQuote={() => handleStepChange(2.5)}
+        />
+      )}
+
+      {currentStep === 2.5 && vehicleData && (
         <div className="w-full overflow-x-hidden">
           <MileageAndPricingStep 
             vehicleData={vehicleData}
-            onBack={() => handleBackToStep(1)} 
+            onBack={() => handleBackToStep(2)} 
             onPlanSelected={handlePlanSelected}
           />
         </div>
