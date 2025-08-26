@@ -2,35 +2,15 @@ import React, { useState } from 'react';
 import { Star, ChevronDown, Play, Car, Truck, Bike } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { supabase } from '@/integrations/supabase/client';
 
 const BuyawarrantyHomepage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [regNumber, setRegNumber] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
-  const [vehicleData, setVehicleData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const handleGetQuote = async () => {
+  const handleGetQuote = () => {
     if (regNumber.trim()) {
-      setIsLoading(true);
-      try {
-        const { data, error } = await supabase.functions.invoke('dvla-vehicle-lookup', {
-          body: { registrationNumber: regNumber }
-        });
-        
-        if (error) {
-          console.error('Error fetching vehicle data:', error);
-        } else {
-          setVehicleData(data);
-        }
-        setIsExpanded(true);
-      } catch (error) {
-        console.error('Error:', error);
-        setIsExpanded(true);
-      } finally {
-        setIsLoading(false);
-      }
+      setIsExpanded(true);
     }
   };
 
@@ -89,36 +69,27 @@ const BuyawarrantyHomepage = () => {
                   </div>
                 </div>
 
-                {/* Vehicle Type Selection */}
-                <div className="flex space-x-1 mb-4">
-                  {[
-                    { name: 'Car', icon: Car },
-                    { name: 'Van', icon: Truck },
-                    { name: 'Bike', icon: Bike }
-                  ].map((vehicle) => {
-                    const IconComponent = vehicle.icon;
-                    return (
-                      <button
-                        key={vehicle.name}
-                        onClick={() => setSelectedVehicle(vehicle.name)}
-                        className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg border transition-colors flex items-center justify-center space-x-1 ${
-                          selectedVehicle === vehicle.name
-                            ? 'bg-blue-500 text-white border-blue-500'
-                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                        }`}
-                      >
-                        <IconComponent className="w-4 h-4" />
-                        <span>{vehicle.name}</span>
-                      </button>
-                    );
-                  })}
+                {/* Vehicle Type Icons */}
+                <div className="flex justify-center space-x-6 mb-4">
+                  <div className="flex items-center space-x-1 text-gray-600">
+                    <Car className="w-5 h-5" />
+                    <span className="text-sm">Car</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-gray-600">
+                    <Truck className="w-5 h-5" />
+                    <span className="text-sm">Van</span>
+                  </div>
+                  <div className="flex items-center space-x-1 text-gray-600">
+                    <Bike className="w-5 h-5" />
+                    <span className="text-sm">Bike</span>
+                  </div>
                 </div>
 
                 {/* Registration Input */}
                 <div className="space-y-3">
                   <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-1 bg-blue-600 text-white text-xs px-2 py-1 rounded">
-                      <span className="text-sm">🇬🇧</span>
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center bg-blue-600 text-white text-xs px-2 py-1 rounded">
+                      <span className="mr-1">🇬🇧</span>
                       <span>GB</span>
                     </div>
                     <Input
@@ -132,10 +103,10 @@ const BuyawarrantyHomepage = () => {
                   
                   <Button 
                     onClick={handleGetQuote}
-                    disabled={isLoading || !regNumber.trim()}
+                    disabled={!regNumber.trim()}
                     className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50"
                   >
-                    {isLoading ? 'Loading...' : 'Get my quote'}
+                    Get my quote
                   </Button>
                 </div>
 
