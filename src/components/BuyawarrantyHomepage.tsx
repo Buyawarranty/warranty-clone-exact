@@ -1,16 +1,36 @@
 import React, { useState } from 'react';
-import { Star, ChevronDown, Play } from 'lucide-react';
+import { Star, ChevronDown, Play, Car, Truck, Bike } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/integrations/supabase/client';
 
 const BuyawarrantyHomepage = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [regNumber, setRegNumber] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
+  const [vehicleData, setVehicleData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleGetQuote = () => {
+  const handleGetQuote = async () => {
     if (regNumber.trim()) {
-      setIsExpanded(true);
+      setIsLoading(true);
+      try {
+        const { data, error } = await supabase.functions.invoke('dvla-vehicle-lookup', {
+          body: { registrationNumber: regNumber }
+        });
+        
+        if (error) {
+          console.error('Error fetching vehicle data:', error);
+        } else {
+          setVehicleData(data);
+        }
+        setIsExpanded(true);
+      } catch (error) {
+        console.error('Error:', error);
+        setIsExpanded(true);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -71,41 +91,51 @@ const BuyawarrantyHomepage = () => {
 
                 {/* Vehicle Type Selection */}
                 <div className="flex space-x-1 mb-4">
-                  {['Car', 'Van', 'Bike'].map((vehicle) => (
-                    <button
-                      key={vehicle}
-                      onClick={() => setSelectedVehicle(vehicle)}
-                      className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg border transition-colors ${
-                        selectedVehicle === vehicle
-                          ? 'bg-blue-500 text-white border-blue-500'
-                          : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
-                      }`}
-                    >
-                      🚗 {vehicle}
-                    </button>
-                  ))}
+                  {[
+                    { name: 'Car', icon: Car },
+                    { name: 'Van', icon: Truck },
+                    { name: 'Bike', icon: Bike }
+                  ].map((vehicle) => {
+                    const IconComponent = vehicle.icon;
+                    return (
+                      <button
+                        key={vehicle.name}
+                        onClick={() => setSelectedVehicle(vehicle.name)}
+                        className={`flex-1 py-2 px-3 text-sm font-medium rounded-lg border transition-colors flex items-center justify-center space-x-1 ${
+                          selectedVehicle === vehicle.name
+                            ? 'bg-blue-500 text-white border-blue-500'
+                            : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100'
+                        }`}
+                      >
+                        <IconComponent className="w-4 h-4" />
+                        <span>{vehicle.name}</span>
+                      </button>
+                    );
+                  })}
                 </div>
 
                 {/* Registration Input */}
                 <div className="space-y-3">
                   <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 bg-blue-600 text-white text-xs px-2 py-1 rounded">
-                      GB
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center space-x-1 bg-blue-600 text-white text-xs px-2 py-1 rounded">
+                      <span className="text-sm">🇬🇧</span>
+                      <span>GB</span>
                     </div>
                     <Input
                       type="text"
                       placeholder="Enter your reg"
                       value={regNumber}
                       onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                      className="pl-16 h-12 text-center font-semibold text-lg bg-yellow-400 border-yellow-400 placeholder:text-gray-700"
+                      className="pl-20 h-12 text-center font-semibold text-lg bg-yellow-400 border-yellow-400 placeholder:text-gray-700"
                     />
                   </div>
                   
                   <Button 
                     onClick={handleGetQuote}
-                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg"
+                    disabled={isLoading || !regNumber.trim()}
+                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50"
                   >
-                    Get my quote
+                    {isLoading ? 'Loading...' : 'Get my quote'}
                   </Button>
                 </div>
 
