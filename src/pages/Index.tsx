@@ -347,7 +347,7 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-stripe-checkout', {
                 body: {
-                  planId: 'platinum',
+                  planId: 'c708e514-d494-4935-827d-96567a078bd9', // Platinum plan ID
                   vehicleData,
                   paymentType: 'yearly',
                   voluntaryExcess: 0,
@@ -369,14 +369,14 @@ const Index = () => {
             try {
               const { data, error } = await supabase.functions.invoke('create-bumper-checkout', {
                 body: {
-                  planId: 'platinum',
+                  planId: 'c708e514-d494-4935-827d-96567a078bd9', // Platinum plan ID
                   vehicleData,
                   paymentType: 'monthly',
                   voluntaryExcess: 0,
                   customerData: {
                     email: vehicleData.email || 'guest@buyawarranty.co.uk',
-                    first_name: vehicleData.firstName || '',
-                    last_name: vehicleData.lastName || '',
+                    first_name: vehicleData.firstName || 'Guest',
+                    last_name: vehicleData.lastName || 'Customer',
                     mobile: vehicleData.phone || '',
                     vehicle_reg: vehicleData.regNumber || '',
                     street: vehicleData.address || '',
