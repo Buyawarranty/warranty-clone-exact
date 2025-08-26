@@ -308,23 +308,31 @@ const Index = () => {
   
   return (
     <div className="bg-[#e8f4fb] min-h-screen overflow-x-hidden">
-      {/* Show progress bar after step 1 */}
-      {currentStep > 1 && <CarJourneyProgress currentStep={currentStep >= 2.5 ? 2 : currentStep} onStepChange={handleStepChange} />}
-      
+     
       {currentStep === 1 && (
         <BuyawarrantyHomepage onRegistrationComplete={handleRegistrationComplete} />
       )}
 
       {currentStep === 2 && vehicleData && (
-        <QuoteDeliveryStep 
-          onBack={() => handleBackToStep(1)}
-          onViewQuote={() => handleStepChange(2.5)}
-          onEmailQuote={() => handleStepChange(2.5)}
-        />
+        <>
+          <QuoteDeliveryStep 
+            onBack={() => handleBackToStep(1)}
+            onViewQuote={() => handleStepChange(2.5)}
+            onEmailQuote={() => handleStepChange(2.5)}
+          />
+          {/* Progress bar positioned after QuoteDeliveryStep header */}
+          <div className="bg-[#e8f4fb]">
+            <CarJourneyProgress currentStep={2} onStepChange={handleStepChange} />
+          </div>
+        </>
       )}
 
       {currentStep === 2.5 && vehicleData && (
         <div className="w-full overflow-x-hidden">
+          {/* Progress bar positioned at top */}
+          <div className="bg-[#e8f4fb]">
+            <CarJourneyProgress currentStep={2} onStepChange={handleStepChange} />
+          </div>
           <MileageAndPricingStep 
             vehicleData={vehicleData}
             onBack={() => handleBackToStep(2)} 
@@ -336,15 +344,21 @@ const Index = () => {
       {currentStep === 3 && (
         <>
           {vehicleData && selectedPlan ? (
-            <CustomerDetailsStep
-              vehicleData={vehicleData}
-              planId={selectedPlan.id}
-              paymentType={selectedPlan.paymentType}
-              planName={selectedPlan.name}
-              pricingData={selectedPlan.pricingData}
-              onNext={handleCustomerDetailsComplete}
-              onBack={() => handleBackToStep(2)}
-            />
+            <>
+              {/* Progress bar positioned at top */}
+              <div className="bg-[#e8f4fb]">
+                <CarJourneyProgress currentStep={3} onStepChange={handleStepChange} />
+              </div>
+              <CustomerDetailsStep
+                vehicleData={vehicleData}
+                planId={selectedPlan.id}
+                paymentType={selectedPlan.paymentType}
+                planName={selectedPlan.name}
+                pricingData={selectedPlan.pricingData}
+                onNext={handleCustomerDetailsComplete}
+                onBack={() => handleBackToStep(2)}
+              />
+            </>
           ) : (
             <div className="w-full px-4 py-8">
               <div className="max-w-4xl mx-auto text-center space-y-6">
