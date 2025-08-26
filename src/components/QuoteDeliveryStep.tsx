@@ -18,52 +18,59 @@ const QuoteDeliveryStep = ({ onBack, onViewQuote, onEmailQuote }: QuoteDeliveryS
             <span className="text-blue-600">buya</span>
             <span className="text-orange-500">warranty</span>
           </div>
+          <nav className="hidden md:flex items-center space-x-8 text-sm">
+            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">What's Covered</a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Make a Claim</a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">FAQ</a>
+            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact Us</a>
+          </nav>
         </div>
       </header>
 
       {/* Progress Steps */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="max-w-4xl mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
+      <div className="bg-gradient-to-r from-blue-50 via-blue-100 to-blue-50 border-b border-gray-100">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="flex items-center justify-between relative">
             {/* Step 1 - Completed */}
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            <div className="flex flex-col items-center z-10">
+              <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-white text-lg font-medium shadow-lg">
                 ✓
               </div>
-              <span className="ml-2 text-sm text-green-600 font-medium">Enter reg plate</span>
+              <span className="mt-2 text-sm text-green-600 font-medium">Enter Registration</span>
             </div>
             
-            {/* Connection Line */}
-            <div className="flex-1 mx-4 h-1 bg-blue-500 rounded"></div>
+            {/* Car Icon - positioned between step 1 and 2 */}
+            <div className="absolute left-1/4 transform -translate-x-1/2 z-20">
+              <div className="bg-orange-500 p-2 rounded-full shadow-lg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17H17L19 9H5L7 17Z" fill="white"/>
+                  <path d="M6 6L4 9H20L18 6H6Z" fill="white"/>
+                  <circle cx="9" cy="19" r="2" fill="white"/>
+                  <circle cx="15" cy="19" r="2" fill="white"/>
+                </svg>
+              </div>
+            </div>
+            
+            {/* Connection Line 1 */}
+            <div className="absolute top-6 left-12 w-1/4 h-1 bg-blue-500 rounded z-0"></div>
             
             {/* Step 2 - Current */}
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            <div className="flex flex-col items-center z-10">
+              <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-lg font-medium shadow-lg">
                 2
               </div>
-              <span className="ml-2 text-sm text-orange-500 font-medium">Receive quote</span>
+              <span className="mt-2 text-sm text-orange-500 font-medium text-center">Get Quote &<br/>Pricing</span>
             </div>
             
-            {/* Connection Line */}
-            <div className="flex-1 mx-4 h-1 bg-gray-200 rounded"></div>
+            {/* Connection Line 2 */}
+            <div className="absolute top-6 right-12 w-1/4 h-1 bg-gray-300 rounded z-0"></div>
             
             {/* Step 3 - Pending */}
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-white text-sm font-medium">
+            <div className="flex flex-col items-center z-10">
+              <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-white text-lg font-medium shadow-lg">
                 3
               </div>
-              <span className="ml-2 text-sm text-gray-500 font-medium">Choose your plan</span>
-            </div>
-            
-            {/* Connection Line */}
-            <div className="flex-1 mx-4 h-1 bg-gray-200 rounded"></div>
-            
-            {/* Step 4 - Pending */}
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center text-white text-sm font-medium">
-                4
-              </div>
-              <span className="ml-2 text-sm text-gray-500 font-medium">Final details</span>
+              <span className="mt-2 text-sm text-gray-500 font-medium">Checkout</span>
             </div>
           </div>
         </div>
