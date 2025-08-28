@@ -319,16 +319,7 @@ const Index = () => {
           <section className="bg-white py-16">
             <div className="max-w-7xl mx-auto px-4">
               <div className="grid lg:grid-cols-2 gap-12 items-center">
-                {/* Left Content - Warranty Panda Image */}
-                <div className="relative">
-                  <img 
-                    src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
-                    alt="Warranty Protection - Panda mascot with electric car and warranty active badge"
-                    className="w-full h-auto"
-                  />
-                </div>
-
-                {/* Right Content */}
+                {/* Left Content */}
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
@@ -388,6 +379,15 @@ const Index = () => {
                       </p>
                     </div>
                   </div>
+                </div>
+
+                {/* Right Content - Warranty Panda Image */}
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
+                    alt="Warranty Protection - Panda mascot with electric car and warranty active badge"
+                    className="w-full h-auto"
+                  />
                 </div>
               </div>
             </div>
