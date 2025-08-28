@@ -171,7 +171,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                     placeholder="ENTER REG"
                     value={regNumber}
                     onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                    className="bg-yellow-400 px-4 py-4 text-black font-bold text-center flex-1 placeholder:text-gray-700 border-none outline-none text-lg tracking-wider"
+                    className="bg-yellow-400 px-4 py-4 text-black font-bold text-center flex-1 placeholder:text-gray-700 border-none outline-none text-xl tracking-wider"
                     maxLength={8}
                   />
                 </div>
