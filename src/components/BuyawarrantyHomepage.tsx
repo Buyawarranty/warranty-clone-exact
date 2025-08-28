@@ -62,6 +62,17 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         // If vehicle is found, expand to show mileage input
         setIsExpanded(true);
         setVehicleNotFound(false);
+        
+        // Scroll to the expanded section after a brief delay
+        setTimeout(() => {
+          const expandedSection = document.querySelector('.expanded-section');
+          if (expandedSection) {
+            expandedSection.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'center' 
+            });
+          }
+        }, 300);
       } else {
         setVehicleNotFound(true);
         setIsExpanded(true);
@@ -246,7 +257,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   
       {/* Expanded Vehicle Details Modal/Section */}
       {isExpanded && (
-        <section className="bg-gray-50 py-8 border-t">
+        <section className="bg-gray-50 py-8 border-t expanded-section">
           <div className="max-w-3xl mx-auto px-4">
             <div className="bg-white rounded-xl shadow-lg p-6">
               <div className="space-y-4">
@@ -302,16 +313,19 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   </>
                 )}
                 
-                <div className="space-y-2">
-                  <label className="text-lg font-medium text-gray-900">
-                    What's your approximate mileage?
-                  </label>
+                <div className="space-y-2 bg-yellow-50 border-2 border-yellow-300 rounded-lg p-4 animate-pulse">
+                  <div className="flex items-center gap-2">
+                    <div className="text-yellow-600">👇</div>
+                    <label className="text-lg font-bold text-gray-900">
+                      Now enter your approximate mileage:
+                    </label>
+                  </div>
                   <Input
                     type="text"
                     placeholder="e.g. 15,000"
                     value={mileage}
                     onChange={(e) => setMileage(e.target.value)}
-                    className="h-12 text-center text-lg"
+                    className="h-12 text-center text-lg border-2 border-yellow-400 focus:border-yellow-500"
                   />
                 </div>
                 
