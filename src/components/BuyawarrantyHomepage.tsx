@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, ChevronDown, Play, Car, Truck, Bike, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,22 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
   const [isSearching, setIsSearching] = useState(false);
   const [vehicleData, setVehicleData] = useState<any>(null);
   const [vehicleNotFound, setVehicleNotFound] = useState(false);
+  const [showStickyBar, setShowStickyBar] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Hide sticky bar when within 200px of the bottom
+      const isNearBottom = scrollTop + windowHeight >= documentHeight - 200;
+      setShowStickyBar(!isNearBottom);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSearchVehicle = async () => {
     if (!regNumber.trim()) return;
@@ -485,7 +501,8 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       </section>
 
       {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+      {showStickyBar && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="text-gray-700 font-bold text-2xl">
@@ -510,7 +527,8 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
             </div>
           </div>
         </div>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
