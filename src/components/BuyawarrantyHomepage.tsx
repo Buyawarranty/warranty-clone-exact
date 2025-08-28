@@ -191,16 +191,25 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                     'Get My Quote'
                   )}
                 </button>
+                
+                {/* Official Trustpilot Logo */}
+                <div className="flex justify-center mt-4">
+                  <img 
+                    src="/lovable-uploads/93ae1ab8-67a7-4ec1-8874-fe6d38c9a39c.png" 
+                    alt="Trustpilot logo" 
+                    className="h-8 w-auto"
+                  />
+                </div>
               </div>
 
-              {/* Trustpilot */}
+              {/* Original Trustpilot section moved below */}
               <div className="flex items-center space-x-2">
                 <div className="flex items-center space-x-1">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">Trustpilot</span>
+                <span className="text-sm text-gray-600">Excellent 4.8/5 based on 8,500+ reviews</span>
               </div>
             </div>
 
