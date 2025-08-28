@@ -400,7 +400,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               <div className="space-y-6">
                 <div className="space-y-4">
                   <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                    What Do We Cover?
+                    What Do We <span className="text-orange-500">Cover?</span>
                   </h2>
                   
                   <div className="space-y-4 text-gray-700">
@@ -552,7 +552,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 </div>
 
                 <div className="space-y-4">
-                  <h2 className="text-3xl font-bold text-gray-900">What Do We Cover?</h2>
+                  <h2 className="text-3xl font-bold text-gray-900">What Do We <span className="text-orange-500">Cover?</span></h2>
                   <p className="text-gray-700 font-medium">Our warranty includes:</p>
                   
                   <ul className="space-y-2 text-gray-700">
