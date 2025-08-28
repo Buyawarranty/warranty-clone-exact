@@ -142,7 +142,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   <span className="text-orange-500">In 60 Seconds!</span>
                 </h1>
                 
-                <ul className="space-y-2 text-lg">
+                <ul className="flex flex-wrap items-center gap-4 text-base lg:text-lg">
                   <li className="flex items-center text-gray-700">
                     <span className="text-green-500 mr-2">✓</span>
                     From only £19/month
@@ -161,7 +161,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               {/* Registration Plate Input */}
               <div className="space-y-4">
                 {/* GB Reg Plate Style Input - Aligned with "60 Seconds!" */}
-                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-80">
+                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-96">
                   <div className="bg-blue-600 text-white px-3 py-4 text-xs font-bold flex items-center">
                     <span className="mr-1">🇬🇧</span>
                     <span>GB</span>
@@ -180,7 +180,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 <button 
                   onClick={handleSearchVehicle}
                   disabled={!regNumber.trim() || isSearching}
-                  className="w-80 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
+                  className="w-96 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
                 >
                   {isSearching ? (
                     <>
