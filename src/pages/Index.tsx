@@ -315,6 +315,78 @@ const Index = () => {
         <>
           <BuyawarrantyHomepage onRegistrationComplete={handleRegistrationComplete} />
           
+          {/* What Do We Cover Section */}
+          <section className="py-16 bg-gradient-to-b from-background to-muted/30">
+            <div className="container mx-auto px-4 max-w-6xl">
+              <div className="mb-16">
+                <h2 className="text-3xl font-bold text-center mb-8">What Do We Cover?</h2>
+                <p className="text-lg text-muted-foreground text-center mb-8">Our warranty includes:</p>
+                
+                <div className="grid md:grid-cols-2 gap-8 items-start">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 text-primary">• Mechanical & Electrical Components:</h3>
+                      <p className="text-muted-foreground">Engine, gearbox, clutch, turbo, drivetrain, suspension, steering, braking systems, fuel, cooling, emissions systems, ECUs, sensors, driver assistance tech, air conditioning, airbags, multimedia systems.</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 text-primary">• Diagnostics & Fault-Finding:</h3>
+                      <p className="text-muted-foreground">Comprehensive diagnostic coverage.</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 text-primary">• Consequential Damage:</h3>
+                      <p className="text-muted-foreground">Protection against related damages.</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 text-primary">• Labour Costs:</h3>
+                      <p className="text-muted-foreground">Labour costs covered.</p>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-xl font-semibold mb-3 text-primary">• Claim Limits:</h3>
+                      <p className="text-muted-foreground">£2,000 or £5,000 per claim.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-center">
+                    <div className="bg-card rounded-lg p-6 shadow-lg border">
+                      <div className="flex items-center justify-center mb-4">
+                        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                          <span className="text-2xl">🛡️</span>
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <h4 className="font-semibold mb-2">Warranty Protection</h4>
+                        <p className="text-sm text-muted-foreground">Comprehensive coverage for your peace of mind</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Protect Your Vehicle Today Section */}
+              <div className="grid md:grid-cols-2 gap-8 items-center mb-16">
+                <div>
+                  <h2 className="text-3xl font-bold mb-4">
+                    Protect Your Vehicle <span className="text-orange-500">Today!</span>
+                  </h2>
+                  <p className="text-lg text-muted-foreground">
+                    Whether you drive a car, van, or motorbike Buy-a-Warranty offers the protection you need. 
+                    Get covered in 1 minute and enjoy peace of mind on the road.
+                  </p>
+                </div>
+                <div className="flex justify-center">
+                  <img 
+                    src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
+                    alt="Warranty Protection - Panda mascot with electric car and warranty active badge"
+                    className="max-w-full h-auto rounded-lg"
+                  />
+                </div>
+              </div>
+            </div>
+          </section>
         </>
       )}
 
