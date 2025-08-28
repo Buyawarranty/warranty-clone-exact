@@ -313,66 +313,6 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         </section>
       )}
 
-      {/* What Do We Cover Section with Curved Background */}
-      <section className="relative bg-white">
-        {/* Curved transition */}
-        <div className="absolute top-0 left-0 w-full overflow-hidden">
-          <svg className="relative block w-full h-12" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V30.86C0,30.86,400,0,600,30.86C800,61.72,1200,30.86,1200,30.86V0Z" className="fill-gray-50"></path>
-          </svg>
-        </div>
-        
-        <div className="pt-16 pb-16">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Content */}
-              <div className="space-y-6">
-                <div className="space-y-4">
-                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                    What Do We Cover?
-                  </h2>
-                  
-                  <div className="space-y-4 text-gray-700">
-                    <p className="text-lg font-medium">Our warranty includes:</p>
-                    
-                    <div className="space-y-3 text-base">
-                      <p><strong>Mechanical & Electrical Components:</strong> Engine, gearbox, clutch, turbo, drivetrain, suspension, steering, braking systems, fuel, cooling, emissions systems, ECUs, sensors, driver assistance tech, air conditioning, airbags, multimedia systems.</p>
-                      
-                      <p><strong>Diagnostics & Fault-Finding:</strong> Comprehensive diagnostic coverage.</p>
-                      
-                      <p><strong>Consequential Damage:</strong> Protection against related damages.</p>
-                      
-                      <p><strong>Labour Costs:</strong> Labour costs covered.</p>
-                      
-                      <p><strong>Claim Limits:</strong> £2,000 or £5,000 per claim.</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-4 pt-4">
-                    <h3 className="text-xl font-bold text-gray-900">Protect Your Vehicle Today!</h3>
-                    
-                    <p className="text-gray-700">
-                      Whether you drive a car, van, or motorbike Buy-a-Warranty offers the 
-                      protection you need. Get covered in 1 minute and enjoy peace of mind 
-                      on the road.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Content - Electric Vehicle Image */}
-              <div className="relative">
-                <img 
-                  src="/lovable-uploads/63f210e4-08e0-419e-ad49-185d4e33328a.png" 
-                  alt="Panda mascot with electric vehicle and WARRANTY ACTIVE badge" 
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Video Section */}
       <section className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4">
@@ -443,6 +383,67 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
           </div>
         </div>
       </section>
+
+      {/* What Do We Cover Section with Curved Background */}
+      <section className="relative bg-white">
+        {/* Improved Curved transition */}
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
+          <svg className="relative block w-full h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" className="fill-gray-50"></path>
+          </svg>
+        </div>
+        
+        <div className="pt-24 pb-16">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Content */}
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                    What Do We Cover?
+                  </h2>
+                  
+                  <div className="space-y-4 text-gray-700">
+                    <p className="text-lg font-medium">Our warranty includes:</p>
+                    
+                    <div className="space-y-3 text-base">
+                      <p><strong>Mechanical & Electrical Components:</strong> Engine, gearbox, clutch, turbo, drivetrain, suspension, steering, braking systems, fuel, cooling, emissions systems, ECUs, sensors, driver assistance tech, air conditioning, airbags, multimedia systems.</p>
+                      
+                      <p><strong>Diagnostics & Fault-Finding:</strong> Comprehensive diagnostic coverage.</p>
+                      
+                      <p><strong>Consequential Damage:</strong> Protection against related damages.</p>
+                      
+                      <p><strong>Labour Costs:</strong> Labour costs covered.</p>
+                      
+                      <p><strong>Claim Limits:</strong> £2,000 or £5,000 per claim.</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-4 pt-4">
+                    <h3 className="text-xl font-bold text-gray-900">Protect Your Vehicle Today!</h3>
+                    
+                    <p className="text-gray-700">
+                      Whether you drive a car, van, or motorbike Buy-a-Warranty offers the 
+                      protection you need. Get covered in 1 minute and enjoy peace of mind 
+                      on the road.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Content - Electric Vehicle Image */}
+              <div className="relative">
+                <img 
+                  src="/lovable-uploads/63f210e4-08e0-419e-ad49-185d4e33328a.png" 
+                  alt="Panda mascot with electric vehicle and WARRANTY ACTIVE badge" 
+                  className="w-full h-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
       {/* Only show expandable section if not expanded in main form */}
       {isExpanded && false && (
