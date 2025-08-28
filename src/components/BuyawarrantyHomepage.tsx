@@ -85,30 +85,84 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="px-4 py-6 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold">
-            <span className="text-blue-600">buya</span>
-            <span className="text-orange-500">warranty</span>
+      {/* Header with Navigation and Reg Plate Search */}
+      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+            {/* Logo */}
+            <div className="text-2xl font-bold">
+              <span className="text-blue-600">buya</span>
+              <span className="text-orange-500">warranty</span>
+            </div>
+            
+            {/* Navigation */}
+            <nav className="hidden lg:flex items-center space-x-8 text-sm">
+              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Our Warranties</a>
+              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">What's Covered</a>
+              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Make A Claim</a>
+              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">FAQ</a>
+              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact Us</a>
+            </nav>
+            
+            {/* Header Reg Plate Search */}
+            <div className="flex items-center space-x-2">
+              <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                WhatsApp Us
+              </button>
+              
+              {/* GB Reg Plate Style Input */}
+              <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden">
+                <div className="bg-blue-600 text-white px-2 py-3 text-xs font-bold flex items-center">
+                  <span className="mr-1">🇬🇧</span>
+                  <span>GB</span>
+                </div>
+                <input
+                  type="text"
+                  placeholder="ENTER REG"
+                  value={regNumber}
+                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
+                  className="bg-yellow-400 px-3 py-3 text-black font-bold text-center w-24 placeholder:text-gray-700 border-none outline-none text-sm"
+                  maxLength={8}
+                />
+              </div>
+              
+              <button 
+                onClick={handleSearchVehicle}
+                disabled={!regNumber.trim() || isSearching}
+                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-bold text-sm disabled:opacity-50 transition-colors flex items-center"
+              >
+                {isSearching ? (
+                  <>
+                    <Loader className="w-4 h-4 mr-2 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  'Get My Quote'
+                )}
+              </button>
+            </div>
           </div>
-          <nav className="hidden md:flex items-center space-x-8 text-sm">
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">What's Covered</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Make a Claim</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">FAQ</a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact Us</a>
-          </nav>
         </div>
       </header>
 
       {/* Hero Section */}
-      <div className="px-4 py-16 bg-gradient-to-br from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <section className="bg-white py-16 lg:py-24">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left content */}
             <div className="space-y-8">
+              {/* Trust Badges */}
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
+                  ✓ Reliable Protection
+                </div>
+                <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">
+                  Save Upto 60%
+                </div>
+              </div>
+
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
                   We've Got You
                   <br />
                   Covered
@@ -116,207 +170,216 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   <span className="text-orange-500">In 60 Seconds!</span>
                 </h1>
                 
-                <div className="flex items-center space-x-2 text-sm">
-                  <span className="text-red-500 font-semibold">• VEHICLE COVER</span>
-                  <span className="text-red-500 font-semibold">• TYRE TYRE COVER</span>
-                  <span className="text-red-500 font-semibold">• KEY PROTECT</span>
-                </div>
-                
-                <p className="text-gray-600">
-                  From only £19/month • Ex VAT • No hidden fees
-                </p>
+                <ul className="space-y-2 text-lg">
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-green-500 mr-2">✓</span>
+                    From only £19/month
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-green-500 mr-2">✓</span>
+                    0% APR
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <span className="text-green-500 mr-2">✓</span>
+                    No hidden fees.
+                  </li>
+                </ul>
               </div>
 
-              {/* Quick Quote Form */}
-              <div className="bg-white rounded-xl shadow-lg p-6 max-w-md">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm font-medium text-gray-600">Your quote in 30 seconds</span>
+              {/* CTA Button */}
+              <div className="flex items-center space-x-4">
+                <button 
+                  onClick={handleSearchVehicle}
+                  disabled={!regNumber.trim() || isSearching}
+                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center"
+                >
+                  {isSearching ? (
+                    <>
+                      <Loader className="w-5 h-5 mr-2 animate-spin" />
+                      Getting Your Quote...
+                    </>
+                  ) : (
+                    'Get My Quote'
+                  )}
+                </button>
+                
+                {/* Trustpilot */}
+                <div className="flex items-center space-x-2">
                   <div className="flex items-center space-x-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
                     ))}
                   </div>
+                  <span className="text-sm text-gray-600">Trustpilot</span>
                 </div>
-
-                {/* Vehicle Type Icons */}
-                <div className="flex justify-center space-x-6 mb-4">
-                  <div className="flex items-center space-x-1 text-gray-600">
-                    <Car className="w-5 h-5" />
-                    <span className="text-sm">Car</span>
-                  </div>
-                  <div className="flex items-center space-x-1 text-gray-600">
-                    <Truck className="w-5 h-5" />
-                    <span className="text-sm">Van</span>
-                  </div>
-                  <div className="flex items-center space-x-1 text-gray-600">
-                    <Bike className="w-5 h-5" />
-                    <span className="text-sm">Bike</span>
-                  </div>
-                </div>
-
-                {/* Registration Input */}
-                <div className="space-y-3">
-                  <div className="relative">
-                    <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center bg-blue-600 text-white text-xs px-2 py-1 rounded">
-                      <span className="mr-1">🇬🇧</span>
-                      <span>GB</span>
-                    </div>
-                    <Input
-                      type="text"
-                      placeholder="Enter your reg"
-                      value={regNumber}
-                      onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                      className="pl-20 h-12 text-center font-semibold text-lg bg-yellow-400 border-yellow-400 placeholder:text-gray-700"
-                    />
-                  </div>
-                  
-                  <button 
-                    onClick={handleSearchVehicle}
-                    disabled={!regNumber.trim() || isSearching}
-                    className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors flex items-center justify-center"
-                  >
-                    {isSearching ? (
-                      <>
-                        <Loader className="w-5 h-5 mr-2 animate-spin" />
-                        Searching vehicle...
-                      </>
-                    ) : (
-                      'Search vehicle'
-                    )}
-                  </button>
-                  
-                  {/* Expanded Vehicle Details Section */}
-                  {isExpanded && (
-                    <div className="mt-6 space-y-4">
-                      {vehicleData && !vehicleNotFound ? (
-                        <>
-                          <div className="text-sm text-gray-600">
-                            We found the following vehicle:
-                          </div>
-                          
-                          <div className="bg-gray-50 border rounded-lg p-3">
-                            <div className="text-sm font-medium text-gray-900">
-                              {vehicleData.yearOfManufacture} • {vehicleData.make} • {vehicleData.model || 'Unknown Model'} • {vehicleData.fuelType} • {vehicleData.transmission || 'Unknown'}
-                            </div>
-                            <div className="text-xs text-gray-500 mt-1">
-                              MOT: {vehicleData.motStatus} • Tax Status: {vehicleData.taxStatus}
-                            </div>
-                          </div>
-                          
-                          <button 
-                            onClick={() => setVehicleNotFound(true)}
-                            className="text-sm text-blue-600 hover:underline"
-                          >
-                            This is not my vehicle
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <div className="text-sm text-gray-600">
-                            {vehicleNotFound ? 'Vehicle not found. Please enter details manually:' : 'Please confirm your vehicle details:'}
-                          </div>
-                          
-                          <div className="bg-gray-50 border rounded-lg p-3 space-y-3">
-                            <div className="grid grid-cols-2 gap-3">
-                              <Input placeholder="Make (e.g. Ford)" className="h-10" />
-                              <Input placeholder="Model (e.g. Focus)" className="h-10" />
-                            </div>
-                            <div className="grid grid-cols-2 gap-3">
-                              <Input placeholder="Year (e.g. 2020)" className="h-10" />
-                              <select className="h-10 px-3 rounded-md border border-input bg-background">
-                                <option>Fuel Type</option>
-                                <option>Petrol</option>
-                                <option>Diesel</option>
-                                <option>Electric</option>
-                                <option>Hybrid</option>
-                              </select>
-                            </div>
-                          </div>
-                          
-                          {vehicleData && (
-                            <button 
-                              onClick={() => setVehicleNotFound(false)}
-                              className="text-sm text-blue-600 hover:underline"
-                            >
-                              Back to found vehicle
-                            </button>
-                          )}
-                        </>
-                      )}
-                      
-                      <div className="space-y-2">
-                        <label className="text-sm font-medium text-gray-700">
-                          What's your approximate mileage?
-                        </label>
-                        <Input
-                          type="text"
-                          placeholder="e.g. 15,000"
-                          value={mileage}
-                          onChange={(e) => setMileage(e.target.value)}
-                          className="h-10"
-                        />
-                      </div>
-                      
-                      <button 
-                        onClick={handleGetQuote}
-                        disabled={!regNumber.trim() || !mileage.trim()}
-                        className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg disabled:opacity-50 rounded-lg transition-colors"
-                      >
-                        Get my quote
-                      </button>
-                      
-                      <div className="text-xs text-gray-500">
-                        We can only provide warranty for vehicles with a maximum mileage of 100,000
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Progress Bar */}
-                <div className="mt-4">
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className={`bg-blue-500 h-2 rounded-full transition-all duration-300 ${isExpanded ? 'w-2/3' : 'w-1/3'}`}></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Trust Indicators */}
-              <div className="flex items-center space-x-3">
-                <div className="flex items-center space-x-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
-                  ))}
-                </div>
-                <span className="text-gray-700 font-medium">Excellent</span>
-                <span className="text-gray-600 text-sm">4.8/5 based on 8,500+ reviews</span>
-                <span className="text-green-600 text-sm font-medium">★★★★★ Trustpilot</span>
               </div>
             </div>
 
-            {/* Right content - Vehicles and Mascot */}
+            {/* Right content - Hero Image */}
             <div className="relative">
-              <div className="flex items-center justify-center">
-                {/* Halfords Autocentre Logo */}
-                <div className="absolute top-0 right-0 bg-black text-white px-3 py-1 rounded text-sm font-bold">
-                  halfords autocentre
+              <img 
+                src="/lovable-uploads/a82efe3e-53ff-4ada-93eb-73dbbc1cc793.png" 
+                alt="Panda mascot with various vehicles - cars, vans, and motorbikes" 
+                className="w-full h-auto"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+                  
+      {/* Expanded Vehicle Details Modal/Section */}
+      {isExpanded && (
+        <section className="bg-gray-50 py-8 border-t">
+          <div className="max-w-3xl mx-auto px-4">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="space-y-4">
+                {vehicleData && !vehicleNotFound ? (
+                  <>
+                    <div className="text-lg font-medium text-gray-900 text-center">
+                      We found your vehicle:
+                    </div>
+                    
+                    <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                      <div className="text-lg font-semibold text-gray-900">
+                        {vehicleData.yearOfManufacture} • {vehicleData.make} • {vehicleData.model || 'Unknown Model'}
+                      </div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        {vehicleData.fuelType} • {vehicleData.transmission || 'Unknown'} • MOT: {vehicleData.motStatus} • Tax: {vehicleData.taxStatus}
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={() => setVehicleNotFound(true)}
+                      className="text-sm text-blue-600 hover:underline"
+                    >
+                      This is not my vehicle
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-lg font-medium text-gray-900 text-center">
+                      {vehicleNotFound ? 'Vehicle not found. Please enter details manually:' : 'Please confirm your vehicle details:'}
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4">
+                      <Input placeholder="Make (e.g. Ford)" className="h-12" />
+                      <Input placeholder="Model (e.g. Focus)" className="h-12" />
+                      <Input placeholder="Year (e.g. 2020)" className="h-12" />
+                      <select className="h-12 px-3 rounded-md border border-input bg-background">
+                        <option>Fuel Type</option>
+                        <option>Petrol</option>
+                        <option>Diesel</option>
+                        <option>Electric</option>
+                        <option>Hybrid</option>
+                      </select>
+                    </div>
+                    
+                    {vehicleData && (
+                      <button 
+                        onClick={() => setVehicleNotFound(false)}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        Back to found vehicle
+                      </button>
+                    )}
+                  </>
+                )}
+                
+                <div className="space-y-2">
+                  <label className="text-lg font-medium text-gray-900">
+                    What's your approximate mileage?
+                  </label>
+                  <Input
+                    type="text"
+                    placeholder="e.g. 15,000"
+                    value={mileage}
+                    onChange={(e) => setMileage(e.target.value)}
+                    className="h-12 text-center text-lg"
+                  />
                 </div>
                 
-                {/* Vehicles */}
-                <div className="grid grid-cols-2 gap-4 mr-8">
-                  <img src="/lovable-uploads/bed8e125-f5d3-4bf5-a0f8-df4df5ff8693.png" alt="White van" className="w-32 h-auto" />
-                  <img src="/lovable-uploads/81af2dba-748e-43a9-b3af-839285969056.png" alt="Black car" className="w-32 h-auto" />
-                  <img src="/lovable-uploads/0ae93d6c-222e-46e2-8e73-9760bf2b943d.png" alt="Motorcycle" className="w-32 h-auto" />
-                </div>
+                <button 
+                  onClick={handleGetQuote}
+                  disabled={!regNumber.trim() || !mileage.trim()}
+                  className="w-full h-14 bg-orange-500 hover:bg-orange-600 text-white font-bold text-xl disabled:opacity-50 rounded-lg transition-colors"
+                >
+                  Continue To Quote
+                </button>
                 
-                {/* Panda Mascot */}
-                <div className="relative">
-                  <img src="/lovable-uploads/2d9a5fef-db12-4eb3-927b-bb28108b055c.png" alt="Panda mascot" className="w-48 h-auto" />
+                <div className="text-sm text-gray-500 text-center">
+                  We can only provide warranty for vehicles with a maximum mileage of 100,000
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Video Section */}
+      <section className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left - Video */}
+            <div className="space-y-6">
+              <div className="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl overflow-hidden aspect-video">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white space-y-4">
+                    <h3 className="text-xl lg:text-2xl font-bold px-4">Extended Warranty Provider UK - Affordable Vehicle Cover Plans</h3>
+                    <button className="bg-white/20 hover:bg-white/30 rounded-full p-4 transition-colors">
+                      <Play className="w-8 h-8 text-white" />
+                    </button>
+                  </div>
+                </div>
+                {/* YouTube embed placeholder */}
+                <iframe 
+                  src="https://www.youtube.com/embed/G9QuVoxckbw" 
+                  title="Extended Warranty Provider UK - Affordable Vehicle Cover Plans"
+                  className="absolute inset-0 w-full h-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+
+            {/* Right - Extended Warranty Info */}
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                  Extended Warranty.
+                  <br />
+                  <span className="text-orange-500">Avoid Costly Repairs</span>
+                </h2>
+                
+                <p className="text-lg text-gray-700">
+                  Protect your vehicle from unexpected repairs with flexible, 
+                  affordable warranty plans. Get covered in under 60 seconds. 
+                  No hidden fees. No nonsense.
+                </p>
+              </div>
+
+              {/* Features */}
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">Mechanical & Electrical Coverage</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">Diagnostics & Fault-Finding</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">Labour Costs Covered</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <span className="text-green-500 text-xl">✓</span>
+                  <span className="text-gray-700">Up to £5,000 per claim</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Only show expandable section if not expanded in main form */}
       {isExpanded && false && (
