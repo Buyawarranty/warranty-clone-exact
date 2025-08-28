@@ -160,9 +160,9 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
               {/* Registration Plate Input */}
               <div className="space-y-4">
-                {/* GB Reg Plate Style Input - Number Plate Proportions */}
-                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg max-w-sm mx-auto lg:mx-0">
-                  <div className="bg-blue-600 text-white px-3 py-3 text-xs font-bold flex items-center">
+                {/* GB Reg Plate Style Input - Aligned with "60 Seconds!" */}
+                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-80">
+                  <div className="bg-blue-600 text-white px-3 py-4 text-xs font-bold flex items-center">
                     <span className="mr-1">🇬🇧</span>
                     <span>GB</span>
                   </div>
@@ -171,16 +171,16 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                     placeholder="ENTER REG"
                     value={regNumber}
                     onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                    className="bg-yellow-400 px-4 py-3 text-black font-bold text-center flex-1 placeholder:text-gray-700 border-none outline-none text-lg tracking-wider"
+                    className="bg-yellow-400 px-4 py-4 text-black font-bold text-center flex-1 placeholder:text-gray-700 border-none outline-none text-lg tracking-wider"
                     maxLength={8}
                   />
                 </div>
                 
-                {/* Get My Quote Button - Same Width as Plate */}
+                {/* Get My Quote Button - Same Width */}
                 <button 
                   onClick={handleSearchVehicle}
                   disabled={!regNumber.trim() || isSearching}
-                  className="w-full max-w-sm mx-auto lg:mx-0 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
+                  className="w-80 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
                 >
                   {isSearching ? (
                     <>
