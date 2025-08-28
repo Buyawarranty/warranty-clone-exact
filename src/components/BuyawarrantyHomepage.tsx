@@ -385,11 +385,11 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       </section>
 
       {/* What Do We Cover Section with Curved Background */}
-      <section className="relative bg-white -mt-1">
-        {/* Simple Curved transition */}
+      <section className="relative bg-white">
+        {/* Smooth Curved transition */}
         <div className="absolute top-0 left-0 w-full overflow-hidden">
-          <svg className="relative block w-full h-24" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0 Q600,120 1200,0 L1200,120 L0,120 Z" className="fill-gray-50"></path>
+          <svg className="relative block w-full h-16" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0 C0,0 400,80 600,80 C800,80 1200,0 1200,0 L1200,120 L0,120 Z" className="fill-gray-50"></path>
           </svg>
         </div>
         
