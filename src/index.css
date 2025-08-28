@@ -102,7 +102,7 @@ html {
 
   /* Global Body Styles - Swinton Match with Poppins */
   body {
-    background-color: hsl(var(--background));
+    background-color: white;
     color: hsl(var(--foreground));
     margin: 0;
     padding: 0;
