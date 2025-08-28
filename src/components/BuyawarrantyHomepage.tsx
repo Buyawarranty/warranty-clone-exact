@@ -531,12 +531,18 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center gap-3 justify-center">
-            <input
-              type="text"
-              placeholder="Enter your reg plate..."
-              className="flex-1 max-w-xs px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-center uppercase"
-              maxLength={8}
-            />
+            <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
+              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
+                <div className="text-xs mb-1">🇬🇧</div>
+                <div className="text-xs font-black">UK</div>
+              </div>
+              <input
+                type="text"
+                placeholder="ENTER REG"
+                className="bg-yellow-400 text-black font-bold text-center py-2 px-4 w-40 focus:outline-none uppercase placeholder-black"
+                maxLength={8}
+              />
+            </div>
             <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold whitespace-nowrap">
               Get My Quote
             </button>
