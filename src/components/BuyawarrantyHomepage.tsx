@@ -386,10 +386,10 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
       {/* What Do We Cover Section with Curved Background */}
       <section className="relative bg-white">
-        {/* Improved Curved transition */}
+        {/* Simple Curved transition */}
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-none">
           <svg className="relative block w-full h-20" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" className="fill-gray-50"></path>
+            <path d="M0,0 C400,100 800,100 1200,0 L1200,120 L0,120 Z" className="fill-gray-50"></path>
           </svg>
         </div>
         
@@ -436,7 +436,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 <img 
                   src="/lovable-uploads/63f210e4-08e0-419e-ad49-185d4e33328a.png" 
                   alt="Panda mascot with electric vehicle and WARRANTY ACTIVE badge" 
-                  className="w-full h-auto"
+                  className="w-4/5 h-auto mx-auto"
                 />
               </div>
             </div>
