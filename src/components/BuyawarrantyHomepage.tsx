@@ -473,20 +473,23 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center gap-3 justify-center">
             <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
-              <div className="bg-blue-600 text-white px-3 py-2 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
+              <div className="bg-blue-600 text-white px-3 py-3 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
                 <div className="text-xs mb-1">🇬🇧</div>
                 <div className="text-xs font-black">UK</div>
               </div>
               <input
                 type="text"
                 placeholder="ENTER REG"
-                className="bg-yellow-400 text-black font-bold text-center py-2 px-4 w-40 focus:outline-none uppercase placeholder-black"
+                className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-48 focus:outline-none uppercase placeholder-black"
                 maxLength={8}
               />
             </div>
-            <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 py-2 rounded-lg font-semibold whitespace-nowrap">
+            <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold whitespace-nowrap pulse">
               Get My Quote
             </button>
+            <div className="text-gray-700 font-semibold text-sm ml-2">
+              Protect Your Vehicle <span className="text-orange-500">Today!</span>
+            </div>
           </div>
         </div>
       </div>
