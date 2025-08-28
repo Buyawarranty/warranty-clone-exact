@@ -355,24 +355,29 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 </p>
               </div>
 
-              {/* Features */}
-              <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-500 text-xl">✓</span>
-                  <span className="text-gray-700">Mechanical & Electrical Coverage</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-500 text-xl">✓</span>
-                  <span className="text-gray-700">Diagnostics & Fault-Finding</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-500 text-xl">✓</span>
-                  <span className="text-gray-700">Labour Costs Covered</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <span className="text-green-500 text-xl">✓</span>
-                  <span className="text-gray-700">Up to £5,000 per claim</span>
-                </div>
+              {/* Get My Cover Button */}
+              <div className="mt-8">
+                <button 
+                  onClick={() => {
+                    // Scroll to the registration section
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    // Focus on the registration input
+                    const regInput = document.querySelector('input[placeholder="ENTER REG"]') as HTMLInputElement;
+                    if (regInput) {
+                      regInput.focus();
+                    }
+                  }}
+                  className="px-8 py-4 rounded-lg font-bold text-lg text-white transition-colors shadow-lg"
+                  style={{ backgroundColor: '#170B54' }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#1a0e5a';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#170B54';
+                  }}
+                >
+                  Get My Cover
+                </button>
               </div>
             </div>
           </div>
