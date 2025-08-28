@@ -444,6 +444,88 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         </div>
       </section>
 
+      {/* Why Choose Buy-a-Warranty Section */}
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content - Payment Options Panda Image */}
+            <div className="relative">
+              <img 
+                src="/lovable-uploads/3055b782-ad2b-4456-804b-84703e692b93.png" 
+                alt="Panda mascot with payment options - Monthly, Yearly, 1,2,3 Years" 
+                className="w-full h-auto"
+              />
+            </div>
+
+            {/* Right Content */}
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                  Why Choose Buy-a-Warranty?
+                </h2>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">No Excess:</span>
+                      <span className="text-gray-700"> Never pay a penny towards repairs.</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Unlimited Claims:</span>
+                      <span className="text-gray-700"> Claim as many times as you need.</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Comprehensive Coverage:</span>
+                      <span className="text-gray-700"> From engine to electrics</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Free MOT Test:</span>
+                      <span className="text-gray-700"> We pay your MOT test fee</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Recovery:</span>
+                      <span className="text-gray-700"> Claim-back recovery costs</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Nationwide Repairs:</span>
+                      <span className="text-gray-700"> Repairs at trusted garages; Halfords, ATS, Kwik Fit</span>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <span className="text-green-500 text-xl mt-1">✓</span>
+                    <div>
+                      <span className="font-semibold text-gray-900">Flexible Plans:</span>
+                      <span className="text-gray-700"> Available on 1, 2, or 3-year plans and monthly 0% APR options</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Only show expandable section if not expanded in main form */}
       {isExpanded && false && (
