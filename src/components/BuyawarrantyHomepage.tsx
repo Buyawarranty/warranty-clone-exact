@@ -162,9 +162,9 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               <div className="space-y-4">
                 {/* GB Reg Plate Style Input - Aligned with "60 Seconds!" */}
                 <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-96">
-                  <div className="bg-blue-600 text-white px-3 py-4 text-xs font-bold flex items-center">
-                    <span className="mr-1">🇬🇧</span>
-                    <span>GB</span>
+                  <div className="bg-blue-600 text-white px-3 py-4 text-sm font-bold flex flex-col items-center justify-center min-w-[60px]">
+                    <div className="text-xs mb-1">🇬🇧</div>
+                    <div className="text-xs font-black">UK</div>
                   </div>
                   <input
                     type="text"
