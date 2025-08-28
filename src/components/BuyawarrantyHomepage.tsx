@@ -42,7 +42,22 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         setIsExpanded(true);
       } else if (data?.found) {
         setVehicleData(data);
-        setIsExpanded(true);
+        // If vehicle is found, immediately proceed to next step with default mileage prompt
+        if (onRegistrationComplete) {
+          onRegistrationComplete({
+            regNumber: regNumber.trim(),
+            mileage: '',
+            email: '',
+            phone: '',
+            firstName: '',
+            lastName: '',
+            address: '',
+            make: data.make,
+            model: data.model || 'Unknown',
+            year: data.yearOfManufacture.toString(),
+            vehicleType: data.vehicleType
+          });
+        }
       } else {
         setVehicleNotFound(true);
         setIsExpanded(true);
