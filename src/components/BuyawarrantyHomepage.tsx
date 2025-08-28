@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Star, ChevronDown, Play, Car, Truck, Bike, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -487,7 +488,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="text-gray-700 font-bold text-lg">
+            <div className="text-gray-700 font-bold text-3xl">
               Protect Your Vehicle <span className="text-orange-500">Today!</span>
             </div>
             <div className="flex items-center gap-3">
