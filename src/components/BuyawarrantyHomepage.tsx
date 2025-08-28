@@ -85,7 +85,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header with Navigation and Reg Plate Search */}
+      {/* Header with Navigation */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
@@ -104,41 +104,13 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Contact Us</a>
             </nav>
             
-            {/* Header Reg Plate Search */}
+            {/* Header CTA */}
             <div className="flex items-center space-x-2">
               <button className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 WhatsApp Us
               </button>
-              
-              {/* GB Reg Plate Style Input */}
-              <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden">
-                <div className="bg-blue-600 text-white px-2 py-3 text-xs font-bold flex items-center">
-                  <span className="mr-1">🇬🇧</span>
-                  <span>GB</span>
-                </div>
-                <input
-                  type="text"
-                  placeholder="ENTER REG"
-                  value={regNumber}
-                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                  className="bg-yellow-400 px-3 py-3 text-black font-bold text-center w-24 placeholder:text-gray-700 border-none outline-none text-sm"
-                  maxLength={8}
-                />
-              </div>
-              
-              <button 
-                onClick={handleSearchVehicle}
-                disabled={!regNumber.trim() || isSearching}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-bold text-sm disabled:opacity-50 transition-colors flex items-center"
-              >
-                {isSearching ? (
-                  <>
-                    <Loader className="w-4 h-4 mr-2 animate-spin" />
-                    Searching...
-                  </>
-                ) : (
-                  'Get My Quote'
-                )}
+              <button className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-bold text-sm transition-colors">
+                Get My Quote
               </button>
             </div>
           </div>
@@ -186,32 +158,50 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 </ul>
               </div>
 
-              {/* CTA Button */}
-              <div className="flex items-center space-x-4">
-                <button 
-                  onClick={handleSearchVehicle}
-                  disabled={!regNumber.trim() || isSearching}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center"
-                >
-                  {isSearching ? (
-                    <>
-                      <Loader className="w-5 h-5 mr-2 animate-spin" />
-                      Getting Your Quote...
-                    </>
-                  ) : (
-                    'Get My Quote'
-                  )}
-                </button>
-                
-                {/* Trustpilot */}
-                <div className="flex items-center space-x-2">
-                  <div className="flex items-center space-x-1">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
-                    ))}
+              {/* Registration Plate Input */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-center lg:justify-start space-x-4">
+                  {/* GB Reg Plate Style Input */}
+                  <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
+                    <div className="bg-blue-600 text-white px-3 py-4 text-xs font-bold flex items-center">
+                      <span className="mr-1">🇬🇧</span>
+                      <span>GB</span>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="ENTER REG"
+                      value={regNumber}
+                      onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
+                      className="bg-yellow-400 px-4 py-4 text-black font-bold text-center w-32 placeholder:text-gray-700 border-none outline-none text-lg"
+                      maxLength={8}
+                    />
                   </div>
-                  <span className="text-sm text-gray-600">Trustpilot</span>
+                  
+                  <button 
+                    onClick={handleSearchVehicle}
+                    disabled={!regNumber.trim() || isSearching}
+                    className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center shadow-lg"
+                  >
+                    {isSearching ? (
+                      <>
+                        <Loader className="w-5 h-5 mr-2 animate-spin" />
+                        Searching...
+                      </>
+                    ) : (
+                      'Get My Quote'
+                    )}
+                  </button>
                 </div>
+              </div>
+
+              {/* Trustpilot */}
+              <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">Trustpilot</span>
               </div>
             </div>
 
