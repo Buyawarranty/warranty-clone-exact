@@ -461,7 +461,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
             <div className="space-y-6">
               <div className="space-y-4">
                 <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
-                  Why Choose Buy-a-Warranty?
+                  Why Choose <span className="text-orange-500">Buy a Warranty?</span>
                 </h2>
                 
                 <div className="space-y-4">
