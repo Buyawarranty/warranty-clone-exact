@@ -192,8 +192,8 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   )}
                 </button>
                 
-                {/* Official Trustpilot Logo */}
-                <div className="flex justify-center mt-4">
+                {/* Official Trustpilot Logo - Left Aligned */}
+                <div className="flex justify-start mt-4">
                   <img 
                     src="/lovable-uploads/93ae1ab8-67a7-4ec1-8874-fe6d38c9a39c.png" 
                     alt="Trustpilot logo" 
@@ -202,14 +202,14 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 </div>
               </div>
 
-              {/* Original Trustpilot section moved below */}
+              {/* Trustpilot Rating */}
               <div className="flex items-center space-x-2">
                 <div className="flex items-center space-x-1">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
                   ))}
                 </div>
-                <span className="text-sm text-gray-600">Excellent 4.8/5 based on 8,500+ reviews</span>
+                <span className="text-sm text-gray-600">Excellent 4.8/5</span>
               </div>
             </div>
 
