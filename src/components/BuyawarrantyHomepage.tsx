@@ -488,7 +488,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="max-w-4xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="text-gray-700 font-bold text-3xl">
+            <div className="text-gray-700 font-bold text-2xl">
               Protect Your Vehicle <span className="text-orange-500">Today!</span>
             </div>
             <div className="flex items-center gap-3">
@@ -504,7 +504,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   maxLength={8}
                 />
               </div>
-              <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-semibold whitespace-nowrap animate-pulse">
+              <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap animate-pulse">
                 Get My Quote
               </button>
             </div>
