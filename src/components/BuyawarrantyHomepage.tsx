@@ -484,7 +484,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 <input
                   type="text"
                   placeholder="ENTER REG"
-                  className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-48 focus:outline-none uppercase placeholder-black"
+                  className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-64 focus:outline-none uppercase placeholder-black"
                   maxLength={8}
                 />
               </div>
