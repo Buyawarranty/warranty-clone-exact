@@ -18,7 +18,7 @@ import PasswordReset from "./components/PasswordReset";
 import ResetPassword from "./pages/ResetPassword";
 import QuickPasswordReset from "./pages/QuickPasswordReset";
 import PaymentFallback from "./pages/PaymentFallback";
-import HowItWorks from "./pages/HowItWorks";
+import HowItWorks from "./pages/HowItWorks"; // How It Works page
 
 import CarJourneyDemo from "./pages/CarJourneyDemo";
 
