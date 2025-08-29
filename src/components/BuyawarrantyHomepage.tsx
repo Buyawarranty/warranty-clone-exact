@@ -532,7 +532,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
       {/* Mobile Warranty Panda Image - Only visible on mobile, positioned after Flexible Plans and before What Do We Cover */}
       <section className="bg-white md:hidden">
-        <div className="max-w-7xl mx-auto px-4 pb-8">
+        <div className="max-w-7xl mx-auto px-4 pb-4">
           <div className="flex justify-center">
             <img 
               src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
