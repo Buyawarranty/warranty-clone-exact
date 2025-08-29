@@ -119,6 +119,14 @@ export default function HowItWorks() {
                     {step.description}
                   </p>
 
+                  <Link 
+                    to="/"
+                    className="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors mb-6"
+                  >
+                    Get My Quote
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+
                   {index < steps.length - 1 && (
                     <div className="hidden lg:flex items-center text-orange-500">
                       <ArrowRight className="w-6 h-6" />
