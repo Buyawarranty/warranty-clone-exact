@@ -1,18 +1,75 @@
 import { ArrowRight, Shield, Search, FileText, CheckCircle, Loader } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 export default function HowItWorks() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [regNumber, setRegNumber] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [vehicleData, setVehicleData] = useState<any>(null);
+  const [vehicleNotFound, setVehicleNotFound] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  // Auto-trigger search if reg parameter exists
+  useEffect(() => {
+    const regFromUrl = searchParams.get('reg');
+    if (regFromUrl && regFromUrl.trim()) {
+      setRegNumber(regFromUrl);
+      handleSearchVehicleFromParam(regFromUrl);
+    }
+  }, [searchParams]);
+
+  // Show/hide sticky bar based on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setHasScrolled(scrollTop > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleSearchVehicleFromParam = async (regFromParam: string) => {
+    setIsSearching(true);
+    setVehicleNotFound(false);
+
+    // Add timeout to prevent infinite loading
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Request timeout')), 15000)
+    );
+
+    try {
+      const apiCall = supabase.functions.invoke('dvla-vehicle-lookup', {
+        body: { registrationNumber: regFromParam.trim() }
+      });
+
+      const result = await Promise.race([apiCall, timeoutPromise]) as any;
+      const { data, error } = result;
+
+      if (error) {
+        console.error('DVLA lookup error:', error);
+        setVehicleNotFound(true);
+      } else if (data?.found) {
+        setVehicleData(data);
+        // Navigate to homepage with vehicle data
+        navigate(`/?reg=${encodeURIComponent(regFromParam.trim())}`);
+      } else {
+        setVehicleNotFound(true);
+      }
+    } catch (error) {
+      console.error('Error calling DVLA API:', error);
+      setVehicleNotFound(true);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   const handleSearchVehicle = async () => {
     if (!regNumber.trim()) return;
-    
-    setIsSearching(true);
-    // Navigate to homepage with the registration number to trigger the lookup
-    navigate(`/?reg=${encodeURIComponent(regNumber.trim())}`);
+    await handleSearchVehicleFromParam(regNumber.trim());
   };
   const steps = [
     {
@@ -193,45 +250,82 @@ export default function HowItWorks() {
       <div className="h-20"></div>
 
       {/* Sticky Bottom Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <div className="text-gray-700 font-bold text-xl md:text-2xl text-center md:text-left">
-              Protect Your Vehicle <span className="text-orange-500">Today!</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
-                <div className="bg-blue-600 text-white px-3 py-3 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
-                  <div className="text-xs mb-1">🇬🇧</div>
-                  <div className="text-xs font-black">UK</div>
-                </div>
-                <input
-                  value={regNumber}
-                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
-                  type="text"
-                  placeholder="ENTER REG"
-                  className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-48 md:w-64 focus:outline-none uppercase placeholder-black"
-                  maxLength={8}
-                />
+      {hasScrolled && (
+        <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+          <div className="max-w-4xl mx-auto">
+            {/* Mobile Layout - Vertical */}
+            <div className="flex md:hidden flex-col items-center gap-3">
+              <div className="text-gray-700 font-bold text-xl text-center">
+                Protect Your Vehicle <span className="text-orange-500">Today!</span>
               </div>
-              <button 
-                onClick={handleSearchVehicle}
-                disabled={!regNumber.trim() || isSearching}
-                className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap flex items-center justify-center disabled:opacity-50"
-              >
-                {isSearching ? (
-                  <>
-                    <Loader className="w-4 h-4 mr-2 animate-spin" />
-                    Searching...
-                  </>
-                ) : (
-                  'Get My Quote'
-                )}
-              </button>
+              <div className="flex items-center gap-2 w-full max-w-sm">
+                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg flex-1">
+                  <div className="bg-blue-600 text-white px-2 py-2 text-xs font-bold flex flex-col items-center justify-center min-w-[40px]">
+                    <div className="text-xs mb-1">🇬🇧</div>
+                    <div className="text-xs font-black">UK</div>
+                  </div>
+                  <input
+                    value={regNumber}
+                    onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
+                    type="text"
+                    placeholder="ENTER REG"
+                    className="bg-yellow-400 text-black font-bold text-center py-2 px-2 flex-1 focus:outline-none uppercase placeholder-black text-sm"
+                    maxLength={8}
+                  />
+                </div>
+                <button 
+                  onClick={handleSearchVehicle}
+                  disabled={!regNumber.trim() || isSearching}
+                  className="bg-blue-900 hover:bg-blue-800 text-white px-3 py-2 rounded-lg font-semibold text-sm disabled:opacity-50 flex items-center justify-center min-w-[80px]"
+                >
+                  {isSearching ? (
+                    <Loader className="w-3 h-3 animate-spin" />
+                  ) : (
+                    'Quote'
+                  )}
+                </button>
+              </div>
+            </div>
+            
+            {/* Desktop Layout - Horizontal */}
+            <div className="hidden md:flex items-center justify-between">
+              <div className="text-gray-700 font-bold text-2xl">
+                Protect Your Vehicle <span className="text-orange-500">Today!</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
+                  <div className="bg-blue-600 text-white px-3 py-3 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
+                    <div className="text-xs mb-1">🇬🇧</div>
+                    <div className="text-xs font-black">UK</div>
+                  </div>
+                  <input
+                    value={regNumber}
+                    onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
+                    type="text"
+                    placeholder="ENTER REG"
+                    className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-64 focus:outline-none uppercase placeholder-black"
+                    maxLength={8}
+                  />
+                </div>
+                <button 
+                  onClick={handleSearchVehicle}
+                  disabled={!regNumber.trim() || isSearching}
+                  className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap disabled:opacity-50 flex items-center justify-center"
+                >
+                  {isSearching ? (
+                    <>
+                      <Loader className="w-4 h-4 mr-2 animate-spin" />
+                      Searching...
+                    </>
+                  ) : (
+                    'Get My Quote'
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -178,7 +178,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               </div>
 
               <div className="space-y-6">
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight">
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-gray-900 leading-tight text-center lg:text-left">
                   We've Got You
                   <br />
                   Covered
@@ -186,7 +186,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   <span className="text-orange-500">In 60 Seconds!</span>
                 </h1>
                 
-                <ul className="flex flex-wrap items-center gap-4 text-base lg:text-lg">
+                <ul className="flex flex-wrap items-center justify-center lg:justify-start gap-4 text-base lg:text-lg">
                   <li className="flex items-center text-gray-700">
                     <span className="text-green-500 mr-2">✓</span>
                     From only £12/month
