@@ -1,7 +1,19 @@
-import { ArrowRight, Shield, Search, FileText, CheckCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { ArrowRight, Shield, Search, FileText, CheckCircle, Loader } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function HowItWorks() {
+  const navigate = useNavigate();
+  const [regNumber, setRegNumber] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+
+  const handleSearchVehicle = async () => {
+    if (!regNumber.trim()) return;
+    
+    setIsSearching(true);
+    // Navigate to homepage with the registration number to trigger the lookup
+    navigate(`/?reg=${encodeURIComponent(regNumber.trim())}`);
+  };
   const steps = [
     {
       number: "01",
@@ -194,18 +206,28 @@ export default function HowItWorks() {
                   <div className="text-xs font-black">UK</div>
                 </div>
                 <input
+                  value={regNumber}
+                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
                   type="text"
                   placeholder="ENTER REG"
                   className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-48 md:w-64 focus:outline-none uppercase placeholder-black"
                   maxLength={8}
                 />
               </div>
-              <Link 
-                to="/"
-                className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap flex items-center justify-center"
+              <button 
+                onClick={handleSearchVehicle}
+                disabled={!regNumber.trim() || isSearching}
+                className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap flex items-center justify-center disabled:opacity-50"
               >
-                Get My Quote
-              </Link>
+                {isSearching ? (
+                  <>
+                    <Loader className="w-4 h-4 mr-2 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  'Get My Quote'
+                )}
+              </button>
             </div>
           </div>
         </div>

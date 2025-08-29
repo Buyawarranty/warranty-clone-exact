@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, ChevronDown, Play, Car, Truck, Bike, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BuyawarrantyHomepageProps {
@@ -11,8 +11,9 @@ interface BuyawarrantyHomepageProps {
 }
 
 const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepageProps) => {
+  const [searchParams] = useSearchParams();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [regNumber, setRegNumber] = useState('');
+  const [regNumber, setRegNumber] = useState(searchParams.get('reg') || '');
   const [mileage, setMileage] = useState('');
   const [selectedVehicle, setSelectedVehicle] = useState('Car');
   const [isSearching, setIsSearching] = useState(false);
@@ -35,9 +36,16 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleSearchVehicle = async () => {
-    if (!regNumber.trim()) return;
+  // Auto-trigger search if reg parameter exists
+  useEffect(() => {
+    const regFromUrl = searchParams.get('reg');
+    if (regFromUrl && regFromUrl.trim()) {
+      setRegNumber(regFromUrl);
+      handleSearchVehicleFromParam(regFromUrl);
+    }
+  }, [searchParams]);
 
+  const handleSearchVehicleFromParam = async (regFromParam: string) => {
     setIsSearching(true);
     setVehicleNotFound(false);
 
@@ -48,7 +56,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
 
     try {
       const apiCall = supabase.functions.invoke('dvla-vehicle-lookup', {
-        body: { registrationNumber: regNumber.trim() }
+        body: { registrationNumber: regFromParam.trim() }
       });
 
       const result = await Promise.race([apiCall, timeoutPromise]) as any;
@@ -85,6 +93,11 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
     } finally {
       setIsSearching(false);
     }
+  };
+
+  const handleSearchVehicle = async () => {
+    if (!regNumber.trim()) return;
+    await handleSearchVehicleFromParam(regNumber.trim());
   };
 
   const handleGetQuote = () => {
