@@ -126,87 +126,12 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Error updating newsletter signup:', updateError);
     }
 
-    // Send email with discount code (using Resend)
-    try {
-      const emailResponse = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${Deno.env.get('RESEND_API_KEY')}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'BuyaWarranty <support@buyawarranty.co.uk>',
-          to: [email],
-          subject: '🎉 Your £25 Discount Code is Ready!',
-          html: `
-            <!DOCTYPE html>
-            <html>
-            <head>
-              <meta charset="utf-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Your £25 Discount Code</title>
-            </head>
-            <body style="margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f9fafb;">
-              <div style="max-width: 600px; margin: 0 auto; background-color: white; padding: 40px 20px;">
-                <div style="text-align: center; margin-bottom: 40px;">
-                  <div style="display: inline-block; padding: 20px; background-color: #f97316; border-radius: 50%; margin-bottom: 20px;">
-                    <span style="color: white; font-weight: bold; font-size: 14px;">
-                      buya<br>warranty
-                    </span>
-                  </div>
-                  <h1 style="color: #1f2937; margin: 0; font-size: 28px;">Your £25 Discount is Ready!</h1>
-                </div>
-                
-                <div style="background-color: #f9fafb; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 30px;">
-                  <p style="color: #6b7280; margin: 0 0 20px 0; font-size: 16px;">Use this exclusive code to get £25 off your warranty:</p>
-                  <div style="background-color: #1f2937; color: white; padding: 15px 25px; border-radius: 8px; font-size: 20px; font-weight: bold; letter-spacing: 2px; display: inline-block; margin-bottom: 20px;">
-                    ${discountCode}
-                  </div>
-                  <p style="color: #ef4444; margin: 0; font-size: 14px; font-weight: 500;">Valid for 30 days • One-time use only</p>
-                </div>
-                
-                <div style="text-center; margin-bottom: 30px;">
-                  <a href="https://buyawarranty.co.uk" style="background-color: #f97316; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; display: inline-block;">
-                    Get My Warranty Now
-                  </a>
-                </div>
-                
-                <div style="border-top: 1px solid #e5e7eb; padding-top: 30px; color: #6b7280; font-size: 14px;">
-                  <h3 style="color: #1f2937; margin: 0 0 15px 0;">Why Choose BuyaWarranty?</h3>
-                  <ul style="margin: 0; padding-left: 20px;">
-                    <li>No excess to pay</li>
-                    <li>Unlimited claims</li>
-                    <li>Comprehensive coverage</li>
-                    <li>Fast payouts</li>
-                    <li>Trusted garage network</li>
-                  </ul>
-                  
-                  <p style="margin-top: 20px; text-align: center; color: #9ca3af; font-size: 12px;">
-                    You received this email because you signed up for our newsletter discount.<br>
-                    BuyaWarranty • United Kingdom
-                  </p>
-                </div>
-              </div>
-            </body>
-            </html>
-          `,
-        }),
-      });
-
-      if (!emailResponse.ok) {
-        console.error('Failed to send email:', await emailResponse.text());
-      } else {
-        console.log('Email sent successfully');
-      }
-    } catch (emailError) {
-      console.error('Email sending error:', emailError);
-    }
-
+    // Return the discount code directly instead of sending email
     return new Response(
       JSON.stringify({
         success: true,
-        discountCode,
-        message: 'Discount code generated and email sent successfully',
+        discount_code: discountCode,
+        message: 'Discount code generated successfully',
       }),
       {
         status: 200,
