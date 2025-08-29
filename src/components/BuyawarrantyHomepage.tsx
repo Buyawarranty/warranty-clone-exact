@@ -175,15 +175,15 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 <ul className="flex flex-wrap items-center gap-4 text-base lg:text-lg">
                   <li className="flex items-center text-gray-700">
                     <span className="text-green-500 mr-2">✓</span>
-                    From only £19/month
+                    From only £12/month
                   </li>
                   <li className="flex items-center text-gray-700">
                     <span className="text-green-500 mr-2">✓</span>
-                    0% APR
+                    Unlimited claims
                   </li>
                   <li className="flex items-center text-gray-700">
                     <span className="text-green-500 mr-2">✓</span>
-                    No hidden fees.
+                    Fast payout
                   </li>
                 </ul>
               </div>
