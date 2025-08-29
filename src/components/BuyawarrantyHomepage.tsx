@@ -118,7 +118,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       {/* Header with Navigation */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex flex-col lg:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col lg:flex-row justify-between items-center gap-4 text-center lg:text-left">
             {/* Logo */}
             <div className="text-2xl font-bold">
               <span className="text-blue-600">buya</span>
@@ -189,9 +189,9 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
               </div>
 
               {/* Registration Plate Input */}
-              <div className="space-y-4">
-                {/* GB Reg Plate Style Input - Aligned with "60 Seconds!" */}
-                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-96">
+              <div className="space-y-4 flex flex-col items-center lg:items-start">
+                {/* GB Reg Plate Style Input - Centered on mobile */}
+                <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg w-full max-w-sm lg:w-96">
                   <div className="bg-blue-600 text-white px-3 py-4 text-sm font-bold flex flex-col items-center justify-center min-w-[60px]">
                     <div className="text-xs mb-1">🇬🇧</div>
                     <div className="text-xs font-black">UK</div>
@@ -206,11 +206,11 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   />
                 </div>
                 
-                {/* Get My Quote Button - Same Width */}
+                {/* Get My Quote Button - Same Width, centered on mobile */}
                 <button 
                   onClick={handleSearchVehicle}
                   disabled={!regNumber.trim() || isSearching}
-                  className="w-96 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
+                  className="w-full max-w-sm lg:w-96 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-bold text-lg disabled:opacity-50 transition-colors flex items-center justify-center shadow-lg"
                 >
                   {isSearching ? (
                     <>
@@ -520,7 +520,42 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       {showStickyBar && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="max-w-4xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
+          {/* Mobile Layout - Stacked */}
+          <div className="md:hidden flex flex-col items-center gap-3">
+            <div className="text-gray-700 font-bold text-lg text-center">
+              Protect Your Vehicle <span className="text-orange-500">Today!</span>
+            </div>
+            <div className="flex items-center gap-2 w-full max-w-sm">
+              <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg flex-1">
+                <div className="bg-blue-600 text-white px-2 py-2 text-xs font-bold flex flex-col items-center justify-center min-w-[40px]">
+                  <div className="text-xs mb-1">🇬🇧</div>
+                  <div className="text-xs font-black">UK</div>
+                </div>
+                <input
+                  value={regNumber}
+                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
+                  type="text"
+                  placeholder="ENTER REG"
+                  className="bg-yellow-400 text-black font-bold text-center py-2 px-2 flex-1 focus:outline-none uppercase placeholder-black text-sm"
+                  maxLength={8}
+                />
+              </div>
+              <button 
+                onClick={handleSearchVehicle}
+                disabled={!regNumber.trim() || isSearching}
+                className="bg-blue-900 hover:bg-blue-800 text-white px-3 py-2 rounded-lg font-semibold text-sm disabled:opacity-50 flex items-center justify-center min-w-[80px]"
+              >
+                {isSearching ? (
+                  <Loader className="w-3 h-3 animate-spin" />
+                ) : (
+                  'Quote'
+                )}
+              </button>
+            </div>
+          </div>
+          
+          {/* Desktop Layout - Horizontal */}
+          <div className="hidden md:flex items-center justify-between">
             <div className="text-gray-700 font-bold text-2xl">
               Protect Your Vehicle <span className="text-orange-500">Today!</span>
             </div>
