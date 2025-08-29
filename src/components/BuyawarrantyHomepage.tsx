@@ -258,7 +258,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
             </div>
 
             {/* Right content - Hero Image */}
-            <div className="relative lg:block hidden">
+            <div className="relative">
               <img 
                 src="/lovable-uploads/a82efe3e-53ff-4ada-93eb-73dbbc1cc793.png" 
                 alt="Panda mascot with various vehicles - cars, vans, and motorbikes" 
@@ -446,17 +446,6 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         </svg>
       </section>
 
-
-      {/* Mobile Panda Image - Above Why Choose Section */}
-      <div className="lg:hidden bg-white py-8">
-        <div className="max-w-md mx-auto px-4">
-          <img 
-            src="/lovable-uploads/a82efe3e-53ff-4ada-93eb-73dbbc1cc793.png" 
-            alt="Panda mascot with various vehicles - cars, vans, and motorbikes" 
-            className="w-full h-auto"
-          />
-        </div>
-      </div>
 
       {/* Why Choose Buy-a-Warranty Section */}
       <section className="bg-white py-16">
