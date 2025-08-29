@@ -347,7 +347,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       )}
 
       {/* Video Section */}
-      <section className="bg-gray-50 py-16 relative overflow-hidden">
+      <section className="bg-gray-50 py-16 pb-24 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Video */}
