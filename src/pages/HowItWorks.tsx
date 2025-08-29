@@ -180,7 +180,7 @@ export default function HowItWorks() {
             </p>
             <Link 
               to="/"
-              className="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors"
+              className="inline-flex items-center bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-colors animate-pulse hover:animate-none"
             >
               Get My Quote Now
               <ArrowRight className="w-5 h-5 ml-2" />
