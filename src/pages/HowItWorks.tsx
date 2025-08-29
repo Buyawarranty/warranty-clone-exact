@@ -126,12 +126,6 @@ export default function HowItWorks() {
                     Get My Quote
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Link>
-
-                  {index < steps.length - 1 && (
-                    <div className="hidden lg:flex items-center text-orange-500">
-                      <ArrowRight className="w-6 h-6" />
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
