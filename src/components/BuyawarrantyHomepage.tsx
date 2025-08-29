@@ -347,7 +347,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
       )}
 
       {/* Video Section */}
-      <section className="bg-gray-50 py-16">
+      <section className="bg-gray-50 py-16 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left - Video */}
@@ -415,6 +415,21 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
             </div>
           </div>
         </div>
+        
+        {/* Curved Bottom Divider */}
+        <svg 
+          className="absolute bottom-0 left-0 w-full block"
+          style={{ zIndex: 1 }}
+          viewBox="0 0 1800 200" 
+          fill="none" 
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path 
+            d="M0,64 C300,120 600,0 900,64 C1200,120 1500,32 1800,64 L1800,200 L0,200 Z" 
+            fill="#ffffff"
+          />
+        </svg>
       </section>
 
 
