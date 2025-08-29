@@ -7,6 +7,7 @@ import CarJourneyProgress from '@/components/CarJourneyProgress';
 import QuoteDeliveryStep from '@/components/QuoteDeliveryStep';
 import CustomerDetailsStep from '@/components/CustomerDetailsStep';
 import VehicleCheckoutStep from '@/components/VehicleCheckoutStep';
+import NewsletterPopupTrigger from '@/components/NewsletterPopupTrigger';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
@@ -553,6 +554,8 @@ const Index = () => {
         </>
       )}
       
+      {/* Newsletter Popup - Only shows on homepage */}
+      {currentStep === 1 && <NewsletterPopupTrigger />}
     </div>
   );
 };

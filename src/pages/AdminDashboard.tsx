@@ -25,6 +25,7 @@ import { TestAutomatedEmail } from '@/components/admin/TestAutomatedEmail';
 import { SimpleEmailTest } from '@/components/admin/SimpleEmailTest';
 import { TestEmailFunctionDirect } from '@/components/admin/TestEmailFunctionDirect';
 import { EmailFunctionDiagnostics } from '@/components/admin/EmailFunctionDiagnostics';
+import NewsletterTab from '@/components/admin/NewsletterTab';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const AdminDashboard = () => {
@@ -105,6 +106,8 @@ const AdminDashboard = () => {
         return <UserPermissionsTab />;
       case 'document-mapping':
         return <DocumentMappingTab />;
+      case 'newsletter':
+        return <NewsletterTab />;
       case 'testing':
         return (
           <div className="max-w-4xl mx-auto">
