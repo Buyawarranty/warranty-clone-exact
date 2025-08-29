@@ -246,15 +246,6 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                 </div>
               </div>
 
-              {/* Trustpilot Rating */}
-              <div className="flex items-center space-x-2">
-                <div className="flex items-center space-x-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star key={star} className="w-4 h-4 fill-green-500 text-green-500" />
-                  ))}
-                </div>
-                <span className="text-sm text-gray-600">Excellent 4.8/5</span>
-              </div>
             </div>
 
             {/* Right content - Hero Image */}
