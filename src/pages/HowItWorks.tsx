@@ -21,11 +21,16 @@ export default function HowItWorks() {
     }
   }, [searchParams]);
 
-  // Show/hide sticky bar based on scroll
+  // Show/hide sticky bar based on scroll - hide when near footer
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
-      setHasScrolled(scrollTop > 100);
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      
+      // Hide sticky bar when within 200px of the bottom (footer area)
+      const isNearBottom = scrollTop + windowHeight >= documentHeight - 200;
+      setHasScrolled(!isNearBottom && scrollTop > 100);
     };
 
     window.addEventListener('scroll', handleScroll);

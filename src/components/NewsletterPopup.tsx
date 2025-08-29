@@ -30,7 +30,7 @@ export const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase
+      const { data: signup, error } = await supabase
         .from('newsletter_signups')
         .insert([
           {
@@ -39,7 +39,9 @@ export const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
             ip_address: null, // Could be implemented with IP detection
             user_agent: navigator.userAgent,
           }
-        ]);
+        ])
+        .select()
+        .single();
 
       if (error) {
         if (error.code === '23505') { // Unique constraint violation
@@ -52,9 +54,25 @@ export const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
           throw error;
         }
       } else {
+        // Generate discount code
+        try {
+          const { error: discountError } = await supabase.functions.invoke('generate-newsletter-discount', {
+            body: {
+              email: email.toLowerCase().trim(),
+              signupId: signup.id,
+            }
+          });
+
+          if (discountError) {
+            console.error('Error generating discount code:', discountError);
+          }
+        } catch (discountErr) {
+          console.error('Discount generation failed:', discountErr);
+        }
+
         toast({
           title: "Success!",
-          description: "You've been subscribed! Your £25 discount code will be sent to your email.",
+          description: "You've been subscribed! Your £25 discount code has been sent to your email.",
         });
         setEmail('');
         onClose();
@@ -96,13 +114,11 @@ export const NewsletterPopup = ({ isOpen, onClose }: NewsletterPopupProps) => {
         <div className="text-center space-y-6">
           {/* Logo */}
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center">
-              <div className="text-white font-bold text-sm">
-                <span className="text-xs">buya</span>
-                <br />
-                <span className="text-xs">warranty</span>
-              </div>
-            </div>
+            <img 
+              src="/lovable-uploads/0fae248e-ea71-4790-b826-f8d17aa8e77a.png" 
+              alt="BuyaWarranty Logo" 
+              className="h-16 w-auto"
+            />
           </div>
 
           {/* Title */}
