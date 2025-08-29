@@ -28,7 +28,7 @@ export default function HowItWorks() {
       number: "04",
       title: "We've Got You Covered",
       description: "If something goes wrong, contact us directly. We'll direct you to our trusted garage network, assess the repair fairly, and pay the garage directly - you pay nothing.",
-      image: "/lovable-uploads/103752b0-2131-4bee-9125-34d393435dfb.png", 
+      image: "/lovable-uploads/bed17cf0-a266-44f2-ab7a-67658b9013fc.png", 
       icon: CheckCircle
     }
   ];
@@ -175,55 +175,36 @@ export default function HowItWorks() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="text-2xl font-bold mb-4">
-                <span className="text-blue-400">buya</span>
-                <span className="text-orange-500">warranty</span>
+      {/* Sticky Bottom Bar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+            <div className="text-gray-700 font-bold text-xl md:text-2xl text-center md:text-left">
+              Protect Your Vehicle <span className="text-orange-500">Today!</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center bg-yellow-400 border-2 border-black rounded-lg overflow-hidden shadow-lg">
+                <div className="bg-blue-600 text-white px-3 py-3 text-sm font-bold flex flex-col items-center justify-center min-w-[50px]">
+                  <div className="text-xs mb-1">🇬🇧</div>
+                  <div className="text-xs font-black">UK</div>
+                </div>
+                <input
+                  type="text"
+                  placeholder="ENTER REG"
+                  className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-48 md:w-64 focus:outline-none uppercase placeholder-black"
+                  maxLength={8}
+                />
               </div>
-              <p className="text-gray-400">
-                Simple, comprehensive vehicle warranties with no excess and unlimited claims.
-              </p>
+              <Link 
+                to="/"
+                className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap flex items-center justify-center"
+              >
+                Get My Quote
+              </Link>
             </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Quick Links</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="/" className="hover:text-white">Home</Link></li>
-                <li><Link to="/how-it-works" className="hover:text-white">How It Works</Link></li>
-                <li><Link to="#" className="hover:text-white">Terms & Conditions</Link></li>
-                <li><Link to="#" className="hover:text-white">Privacy Policy</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><Link to="#" className="hover:text-white">Contact Us</Link></li>
-                <li><Link to="#" className="hover:text-white">Claims</Link></li>
-                <li><Link to="#" className="hover:text-white">FAQ</Link></li>
-                <li><Link to="#" className="hover:text-white">Help Center</Link></li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <div className="space-y-2 text-gray-400">
-                <p>Phone: 0800 123 4567</p>
-                <p>Email: hello@buyawarranty.co.uk</p>
-                <p>Mon-Fri: 9am-6pm</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 BuyaWarranty. All rights reserved.</p>
           </div>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
