@@ -531,14 +531,27 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
                   <div className="text-xs font-black">UK</div>
                 </div>
                 <input
+                  value={regNumber}
+                  onChange={(e) => setRegNumber(e.target.value.toUpperCase())}
                   type="text"
                   placeholder="ENTER REG"
                   className="bg-yellow-400 text-black font-bold text-center py-3 px-6 w-64 focus:outline-none uppercase placeholder-black"
                   maxLength={8}
                 />
               </div>
-              <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap animate-pulse">
-                Get My Quote
+              <button 
+                onClick={handleSearchVehicle}
+                disabled={!regNumber.trim() || isSearching}
+                className="bg-blue-900 hover:bg-blue-800 text-white px-6 h-14 rounded-lg font-semibold whitespace-nowrap disabled:opacity-50 flex items-center justify-center"
+              >
+                {isSearching ? (
+                  <>
+                    <Loader className="w-4 h-4 mr-2 animate-spin" />
+                    Searching...
+                  </>
+                ) : (
+                  'Get My Quote'
+                )}
               </button>
             </div>
           </div>
