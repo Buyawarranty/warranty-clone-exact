@@ -418,15 +418,15 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         
         {/* Curved Bottom Divider */}
         <svg 
-          className="absolute bottom-0 left-0 w-full block"
+          className="absolute -bottom-1 left-0 w-full block"
           style={{ zIndex: 1 }}
-          viewBox="0 0 1800 200" 
+          viewBox="0 0 1200 60" 
           fill="none" 
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
         >
           <path 
-            d="M0,64 C300,120 600,0 900,64 C1200,120 1500,32 1800,64 L1800,200 L0,200 Z" 
+            d="M0,0 Q600,60 1200,0 L1200,60 L0,60 Z" 
             fill="#ffffff"
           />
         </svg>
