@@ -18,6 +18,7 @@ import PasswordReset from "./components/PasswordReset";
 import ResetPassword from "./pages/ResetPassword";
 import QuickPasswordReset from "./pages/QuickPasswordReset";
 import PaymentFallback from "./pages/PaymentFallback";
+import HowItWorks from "./pages/HowItWorks";
 
 import CarJourneyDemo from "./pages/CarJourneyDemo";
 
@@ -35,6 +36,7 @@ const App = () => (
             <main className="flex-1 pb-32">
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/how-it-works" element={<HowItWorks />} />
                 <Route path="/thank-you" element={<ThankYou />} />
                 <Route path="/payment-fallback" element={<PaymentFallback />} />
                 

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Star, ChevronDown, Play, Car, Truck, Bike, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 
 interface BuyawarrantyHomepageProps {
@@ -127,7 +128,7 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
             
             {/* Navigation */}
             <nav className="hidden lg:flex items-center space-x-8 text-sm">
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Our Warranties</a>
+              <Link to="/how-it-works" className="text-gray-700 hover:text-blue-600 transition-colors">How It Works</Link>
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">What's Covered</a>
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">Make A Claim</a>
               <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors">FAQ</a>
