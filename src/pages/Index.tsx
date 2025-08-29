@@ -381,8 +381,8 @@ const Index = () => {
                   </div>
                 </div>
 
-                {/* Right Content - Warranty Panda Image */}
-                <div className="relative">
+                {/* Right Content - Warranty Panda Image - Hidden on mobile, moved above */}
+                <div className="relative hidden md:block">
                   <img 
                     src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
                     alt="Warranty Protection - Panda mascot with electric car and warranty active badge"

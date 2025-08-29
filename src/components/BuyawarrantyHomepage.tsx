@@ -530,6 +530,19 @@ const BuyawarrantyHomepage = ({ onRegistrationComplete }: BuyawarrantyHomepagePr
         </div>
       </section>
 
+      {/* Mobile Warranty Panda Image - Only visible on mobile, positioned after Flexible Plans and before What Do We Cover */}
+      <section className="bg-white md:hidden">
+        <div className="max-w-7xl mx-auto px-4 pb-8">
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/e1385dd8-13fc-40eb-8f98-7517b4903e8f.png" 
+              alt="Warranty Protection - Panda mascot with electric car and warranty active badge"
+              className="w-full h-auto max-w-md"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Sticky Bottom Bar */}
       {showStickyBar && (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
