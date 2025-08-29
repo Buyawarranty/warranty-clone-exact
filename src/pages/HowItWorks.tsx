@@ -175,6 +175,9 @@ export default function HowItWorks() {
         </div>
       </section>
 
+      {/* Bottom spacing for sticky bar */}
+      <div className="h-20"></div>
+
       {/* Sticky Bottom Bar */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50">
         <div className="max-w-4xl mx-auto">
