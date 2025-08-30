@@ -181,92 +181,67 @@ const handler = async (req: Request): Promise<Response> => {
       p_created_by: 'webhook'
     });
 
-    // Step 5: Trigger welcome email
-    console.log('Step 5: Triggering welcome email');
+    // Step 5: Send welcome email with login credentials
+    console.log('Step 5: Sending welcome email with login credentials');
     
     try {
-      // Get the welcome email template
-      const { data: template, error: templateError } = await supabase
-        .from('email_templates')
-        .select('*')
-        .eq('template_type', 'welcome')
-        .eq('is_active', true)
-        .single();
+      const welcomeEmailData = {
+        email: customerEmail,
+        planType: planType,
+        paymentType: paymentType,
+        policyNumber: policy.policy_number,
+        registrationPlate: vehicleDetails?.registration_plate || vehicleDetails?.registrationPlate || '',
+        customerName: customerName
+      };
 
-      if (!templateError && template) {
-        // Prepare email variables
-        const emailVariables = {
-          customer_name: customerName,
-          warranty_number: policy.warranty_number,
-          policy_start_date: new Date(policy.policy_start_date).toLocaleDateString('en-GB'),
-          policy_end_date: new Date(policy.policy_end_date).toLocaleDateString('en-GB'),
-          secure_download_link: `https://buyawarranty.co.uk/download-policy/${policy.id}`
-        };
+      const { data: welcomeResult, error: welcomeError } = await supabase.functions.invoke(
+        'send-welcome-email',
+        { body: welcomeEmailData }
+      );
 
-        // Prepare PDF attachment (simplified - you'll need to implement actual PDF retrieval)
-        const attachments = [{
-          filename: `warranty-policy-${policy.warranty_number}.pdf`,
-          content: documentPath, // This should be the actual PDF content
-          type: 'application/pdf'
-        }];
+      if (welcomeError) {
+        console.error('Failed to send welcome email:', welcomeError);
+        // Update policy with email failure status
+        await supabase
+          .from('customer_policies')
+          .update({ 
+            email_sent_status: 'failed',
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', policy.id);
 
-        // Send welcome email via send-email function
-        const emailResponse = await supabase.functions.invoke('send-email', {
-          body: {
-            templateId: template.id,
-            recipientEmail: customerEmail,
-            customerId: customer.id,
-            variables: emailVariables,
-            attachments: attachments
-          }
+        // Log the email failure event
+        await supabase.rpc('log_warranty_event', {
+          p_policy_id: policy.id,
+          p_customer_id: customer.id,
+          p_event_type: 'welcome_email_failed',
+          p_event_data: { error: welcomeError },
+          p_created_by: 'system'
         });
+      } else {
+        console.log('Successfully sent welcome email with login details');
+        // Update policy with email success status
+        await supabase
+          .from('customer_policies')
+          .update({ 
+            email_sent_status: 'sent',
+            email_sent_at: new Date().toISOString(),
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', policy.id);
 
-        if (emailResponse.error) {
-          console.error('Error sending welcome email:', emailResponse.error);
-          // Update policy status to indicate email failed
-          await supabase
-            .from('customer_policies')
-            .update({ 
-              email_sent_status: 'failed',
-              email_sent_at: new Date().toISOString()
-            })
-            .eq('id', policy.id);
-
-          // Log the email failure
-          await supabase.rpc('log_warranty_event', {
-            p_policy_id: policy.id,
-            p_customer_id: customer.id,
-            p_event_type: 'email_failed',
-            p_event_data: { error: emailResponse.error },
-            p_created_by: 'system'
-          });
-        } else {
-          console.log('Welcome email sent successfully');
-          // Update policy status to indicate email sent
-          await supabase
-            .from('customer_policies')
-            .update({ 
-              email_sent_status: 'sent',
-              email_sent_at: new Date().toISOString()
-            })
-            .eq('id', policy.id);
-
-          // Log the email success
-          await supabase.rpc('log_warranty_event', {
-            p_policy_id: policy.id,
-            p_customer_id: customer.id,
-            p_event_type: 'email_sent',
-            p_event_data: { 
-              template_id: template.id,
-              email_id: emailResponse.data?.emailId 
-            },
-            p_created_by: 'system'
-          });
-        }
+        // Log the success event
+        await supabase.rpc('log_warranty_event', {
+          p_policy_id: policy.id,
+          p_customer_id: customer.id,
+          p_event_type: 'welcome_email_sent',
+          p_event_data: { email: customerEmail },
+          p_created_by: 'system'
+        });
       }
     } catch (emailError) {
-      console.error('Error in email process:', emailError);
-      // Don't fail the whole process if email fails
+      console.error('Exception in welcome email process:', emailError);
+      // Don't fail the whole process if welcome email fails
     }
 
     console.log('=== Warranty Purchase Processing Complete ===');

@@ -79,15 +79,39 @@ const CustomerDashboard = () => {
       return;
     }
     
-    console.log("fetchPolicy: Fetching policy for user:", user.id);
+    console.log("fetchPolicy: Fetching policy for user:", user.id, "email:", user.email);
     
     try {
-      const { data, error } = await supabase
+      // First try to find policy by user_id
+      let { data, error } = await supabase
         .from('customer_policies')
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(1);
+
+      // If no policy found by user_id, try by email
+      if ((!data || data.length === 0) && user.email) {
+        console.log("fetchPolicy: No policy found by user_id, trying by email:", user.email);
+        const emailResult = await supabase
+          .from('customer_policies')
+          .select('*')
+          .eq('email', user.email)
+          .order('created_at', { ascending: false })
+          .limit(1);
+        
+        data = emailResult.data;
+        error = emailResult.error;
+
+        // If we found a policy by email but no user_id, update it to link to this user
+        if (data && data.length > 0 && !data[0].user_id) {
+          console.log("fetchPolicy: Found policy by email, linking to user:", user.id);
+          await supabase
+            .from('customer_policies')
+            .update({ user_id: user.id })
+            .eq('id', data[0].id);
+        }
+      }
 
       console.log("fetchPolicy: Query result:", { data, error });
 
